@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/plugins/map_library">
+        <file>icon.png</file>
+        <file>help.png</file>
+        <file>settings.png</file>
+    </qresource>
+</RCC>

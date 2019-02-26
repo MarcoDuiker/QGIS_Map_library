@@ -1,0 +1,32 @@
+
+[general]
+name=Map Library
+qgisMinimumVersion=3.0
+description=A map library which makes it easy to add much used maps to your project.
+version=0.5
+author=Marco Duiker - MD-kwadraat
+email=md@md-kwadraat.nl
+
+about=This plug-in is meant for organizations or organizational units (that can be you !) as a means to provide one or more libraries of (often used) maps (layers) to the end user.
+
+tracker=https://github.com/MarcoDuiker/QGIS_Map_library/issues/
+repository=https://github.com/MarcoDuiker/QGIS_Map_library/
+# End of mandatory metadata
+
+# Recommended items:
+
+# Uncomment the following line and add your changelog:
+# changelog=
+
+# Tags are comma separated with spaces allowed
+tags=maps, layers, wms, wfs, ogr, library
+
+homepage=https://github.com/MarcoDuiker/QGIS_Map_library/issues/
+category=Web
+icon=icon.png
+# experimental flag
+experimental=False
+
+# deprecated flag (applies to the whole plugin, not just a single version)
+deprecated=False
+

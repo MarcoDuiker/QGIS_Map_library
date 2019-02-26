@@ -1,0 +1,352 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Introduction &#8212; Map Library 0.5 documentation</title>
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.5',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Welcome to the Map Library plugin documentation" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to the Map Library plugin documentation"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Map Library 0.5 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="introduction">
+<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="about">
+<h2>About<a class="headerlink" href="#about" title="Permalink to this headline">¶</a></h2>
+<p>This plug-in is developed by Marco Duiker from <a class="reference external" href="http://www.md-kwadraat.nl/">MD-kwadraat</a> .</p>
+<p>The plugin is inserted in the Web Menu of QGIS. Furthermore, an icon is added to the toolbars.</p>
+<p>This plug-in is meant for organizations or organizational units (that can be you !) as a means to provide one or more libraries of (often used) maps (layers) to the end user.</p>
+<p>Both libraries and maps can be available local on the file system or remotely on a server accessible via http(s).</p>
+<p>Layers can be just about any type QGIS supports, including group layers. Layers can be defined from a “connection string” defining the connection to the data, or from a QGIS layer file (.qlr) containing the connection to the data as well as styling and other properties.</p>
+<p>Of course, entries in the library can have a metadata url associated, so the end user can find metadata for layers and sections in the library.</p>
+</div>
+<div class="section" id="using-the-plugin">
+<h2>Using the plugin<a class="headerlink" href="#using-the-plugin" title="Permalink to this headline">¶</a></h2>
+<p>Using the plugin is as simple as clicking the icon to open the Map Library dialog.</p>
+<p>Then the Map Library can be browsed or searched via the search bar.</p>
+<p>Once an interesting layer is found, metadata can be accessed via the <cite>Metadata</cite> button. A layer can be added to the project by double clicking the item, or by pressing the <cite>Add</cite> button.</p>
+<p>Via the settings of the plugin (accesible via the Map Library menu in the Web menu of QGIS), the library can be selected.</p>
+</div>
+<div class="section" id="managing-libraries">
+<h2>Managing Libraries<a class="headerlink" href="#managing-libraries" title="Permalink to this headline">¶</a></h2>
+<p>Up till now there is no application for managing libraries. So a text editor is all you need (preferably one which shows errors in json files).</p>
+<div class="section" id="map-library-index-file">
+<h3>Map Library index file<a class="headerlink" href="#map-library-index-file" title="Permalink to this headline">¶</a></h3>
+<p>In the Map Library settings the user chooses a Map Library index file in json format.</p>
+<p>By default this is the <code class="docutils literal"><span class="pre">libs\libs.json</span></code> file in the plugin folder.</p>
+<p>This file should be a json file with contents like:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;Example&quot;</span><span class="p">:</span> <span class="s2">&quot;libs/example/example.json&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>In this example only one top level entry <code class="docutils literal"><span class="pre">Example</span></code> is shown to the user. The contents from this entry is taken from the Map Library contents file <code class="docutils literal"><span class="pre">libs/example/example.json</span></code>.</p>
+<p>You can have as many top level entries as you like, by adding more entries separated by colons like:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;Example&quot;</span><span class="p">:</span>          <span class="s2">&quot;libs/example/example.json&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Another Example&quot;</span><span class="p">:</span>  <span class="s2">&quot;libs/example/example2.json&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The Map Library contents file may be specified by:</p>
+<blockquote>
+<div><ul class="simple">
+<li>an absolute path on the file system</li>
+<li>a relative path on the file system (relative to the Map Library plugin folder)</li>
+<li>an URL starting with <code class="docutils literal"><span class="pre">http://</span></code> or <code class="docutils literal"><span class="pre">https://</span></code></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="map-library-contents-file">
+<h3>Map Library contents file<a class="headerlink" href="#map-library-contents-file" title="Permalink to this headline">¶</a></h3>
+<p>The Map Library contents file specifies the content of a top level entry in json format. It is a hierarchical structure with as many levels as you like. Don’t go overboard on this as people tend to find things better in wide than in deep structures.</p>
+<p>An example of a small piece of a Map Library Contents file is:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="s2">&quot;Aerial Photographs&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A nice description ...&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Bing&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;connection&quot;</span><span class="p">:</span> <span class="s2">&quot;libs/example/bing_aerial.qlr&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;provider&quot;</span><span class="p">:</span> <span class="s2">&quot;qlr&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Bing satellite&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;keywords&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Microsoft&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;metadata_url&quot;</span><span class="p">:</span> <span class="s2">&quot;https://wikipedia.org/wiki/Bing_Maps&quot;</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;Blue Marble&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;connection&quot;</span><span class="p">:</span> <span class="s2">&quot;contextualWMSLegend=0&amp;crs=EPSG:3857&amp;dpiMode=7&amp;featureCount=10&amp;format=image/png&amp;layers=nasa:bluemarble&amp;styles&amp;url=https://demo.boundlessgeo.com/geoserver/ows&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;provider&quot;</span><span class="p">:</span> <span class="s2">&quot;wms&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Nasa Blue Marble provided by Boundless&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;keywords&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;boundless&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;metadata_url&quot;</span><span class="p">:</span> <span class="s2">&quot;https://visibleearth.nasa.gov/view_cat.php?categoryID=1484&quot;</span>
+    <span class="p">}</span>
+<span class="p">},</span>
+<span class="s2">&quot;Topography and Roads&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Descriptions on sections may be empty or omited altogether&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;OpenStreetMap&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;connection&quot;</span><span class="p">:</span> <span class="s2">&quot;libs/example/osm_standard.qlr&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;provider&quot;</span><span class="p">:</span> <span class="s2">&quot;qlr&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;OpenStreetMap standard&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;keywords&quot;</span><span class="p">:</span> <span class="p">[],</span>
+        <span class="s2">&quot;metadata_url&quot;</span><span class="p">:</span> <span class="s2">&quot;https://www.openstreetmap.org/&quot;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="section" id="defining-sections">
+<h4>Defining Sections<a class="headerlink" href="#defining-sections" title="Permalink to this headline">¶</a></h4>
+<dl class="docutils">
+<dt>All items which have children and not the properties:</dt>
+<dd><ul class="first last simple">
+<li><code class="docutils literal"><span class="pre">connection</span></code></li>
+<li><code class="docutils literal"><span class="pre">provider</span></code></li>
+</ul>
+</dd>
+<dt>are sections. A section can have other properties just like the layers (see below). The following properties are allowed:</dt>
+<dd><ul class="first last simple">
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">description</span></code></dt>
+<dd><ul class="first last">
+<li>this is the description shown to the user</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">keywords</span></code></dt>
+<dd><ul class="first last">
+<li>these keywords get indexed so they aid searching. Don’t duplicate words from the <code class="docutils literal"><span class="pre">description</span></code> as those words get indexed anyhow.</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">metadata_url</span></code></dt>
+<dd><ul class="first last">
+<li>an URL to a page containing metadata for the layer</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</div>
+<div class="section" id="defining-layers">
+<h4>Defining Layers<a class="headerlink" href="#defining-layers" title="Permalink to this headline">¶</a></h4>
+<dl class="docutils">
+<dt>A layer is an item without children which has at least the following properties:</dt>
+<dd><ul class="first last simple">
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">connection</span></code></dt>
+<dd><ul class="first last">
+<li>this defines the path to the data</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">provider</span></code></dt>
+<dd><ul class="first last">
+<li>this tells QGIS how to interpret the path to add the layer to the project.</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+<dt>Optionally a layer can have the following properties</dt>
+<dd><ul class="first last simple">
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">description</span></code></dt>
+<dd><ul class="first last">
+<li>this is the description shown to the user</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">keywords</span></code></dt>
+<dd><ul class="first last">
+<li>these keywords get indexed so they aid searching. Don’t duplicate words from the <code class="docutils literal"><span class="pre">description</span></code> as those words get indexed anyhow.</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">metadata_url</span></code></dt>
+<dd><ul class="first last">
+<li>an URL to a page containing metadata for the layer</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</div>
+<div class="section" id="defining-valid-layers">
+<h4>Defining VALID layers<a class="headerlink" href="#defining-valid-layers" title="Permalink to this headline">¶</a></h4>
+<p>A valid layer has to have a <code class="docutils literal"><span class="pre">provider</span></code> property which is supported. The following providers are supported (case sensitive):</p>
+<blockquote>
+<div><ul class="simple">
+<li><dl class="first docutils">
+<dt>Vector Layers</dt>
+<dd><ul class="first last">
+<li><code class="docutils literal"><span class="pre">delimitedtext</span></code></li>
+<li><code class="docutils literal"><span class="pre">gpx</span></code></li>
+<li><code class="docutils literal"><span class="pre">ogr</span></code></li>
+<li><code class="docutils literal"><span class="pre">postgres</span></code></li>
+<li><code class="docutils literal"><span class="pre">spatialite</span></code></li>
+<li><code class="docutils literal"><span class="pre">WFS</span></code></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Raster Layers</dt>
+<dd><ul class="first last">
+<li><code class="docutils literal"><span class="pre">gdal</span></code></li>
+<li><code class="docutils literal"><span class="pre">wcs</span></code></li>
+<li><code class="docutils literal"><span class="pre">wms</span></code></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+<p>All these require a <code class="docutils literal"><span class="pre">connection</span></code> which QGIS uses to add the layer. Creating a valid <code class="docutils literal"><span class="pre">connection</span></code> is a bit of a black art for these layer types. Adding the layer to be defined to QGIS first and then looking at the source properties helps, as well as <a class="reference external" href="https://docs.qgis.org/testing/en/docs/pyqgis_developer_cookbook/loadlayer.html">this page</a> in the pyQGIS cookbook.</p>
+<p>A much easier way to create a valid layer is the following process:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>In QGIS create a layer (or a group layer) having all the properties you want the layer in the library to have)</li>
+<li>Export this layer (or layer group) to a QGIS layer definition file (.qlr)</li>
+<li><dl class="first docutils">
+<dt>Make the path to this .qlr file the <code class="docutils literal"><span class="pre">connection</span></code>. This may be</dt>
+<dd><ul class="first last">
+<li>an absolute path on the file system</li>
+<li>a relative path on the file system (relative to the Map Library plugin folder)</li>
+<li>an URL starting with <code class="docutils literal"><span class="pre">http://</span></code> or <code class="docutils literal"><span class="pre">https://</span></code></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Set the <code class="docutils literal"><span class="pre">provider</span></code> to</dt>
+<dd><ul class="first last">
+<li><code class="docutils literal"><span class="pre">qlr</span></code></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ol>
+</div></blockquote>
+<p>The nice thing about this approach is that the QGIS layer definition file saves all properties of the layer(group) like styling, scale dependent visibility, metadata, etc.</p>
+<p><strong>Beware:</strong></p>
+<p>If you create layers from local files the user must have access to the file paths which ends up in the <code class="docutils literal"><span class="pre">.qlr</span></code> file. Depending on system configuration it might be easier to work with relative paths (relative to the Map Library plugin folder) or rather with absolute paths.</p>
+<p>For things to work out it might be necessary to edit the <code class="docutils literal"><span class="pre">.glr</span></code> files with a text editor to get the file paths right.</p>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Introduction</a><ul>
+<li><a class="reference internal" href="#about">About</a></li>
+<li><a class="reference internal" href="#using-the-plugin">Using the plugin</a></li>
+<li><a class="reference internal" href="#managing-libraries">Managing Libraries</a><ul>
+<li><a class="reference internal" href="#map-library-index-file">Map Library index file</a></li>
+<li><a class="reference internal" href="#map-library-contents-file">Map Library contents file</a><ul>
+<li><a class="reference internal" href="#defining-sections">Defining Sections</a></li>
+<li><a class="reference internal" href="#defining-layers">Defining Layers</a></li>
+<li><a class="reference internal" href="#defining-valid-layers">Defining VALID layers</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Welcome to the Map Library plugin documentation</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/introduction.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to the Map Library plugin documentation"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Map Library 0.5 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, Marco Duiker (MD-kwadraat).
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.5.
+    </div>
+  </body>
+</html>

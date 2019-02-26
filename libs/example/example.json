@@ -1,0 +1,95 @@
+{
+    "Aerial Photographs": {
+        "description": "",
+
+        "Bing": {
+            "connection": "libs/example/bing_aerial.qlr",
+            "provider": "qlr", 
+            "description": "Bing satellite",
+            "keywords": ["Microsoft"],
+            "metadata_url": "https://wikipedia.org/wiki/Bing_Maps"
+        },
+
+        "Google": {
+            "connection": "libs/example/google_satellite.qlr",
+            "provider": "qlr", 
+            "description": "Google satellite",
+            "keywords": [],
+            "metadata_url": "https://wikipedia.org/wiki/Google_Maps"
+        },
+
+        "Blue Marble": {
+            "connection": "contextualWMSLegend=0&crs=EPSG:3857&dpiMode=7&featureCount=10&format=image/png&layers=nasa:bluemarble&styles&url=https://demo.boundlessgeo.com/geoserver/ows",
+            "provider": "wms", 
+            "description": "Nasa Blue Marble provided by Boundless",
+            "keywords": ["boundless"],
+            "metadata_url": "https://visibleearth.nasa.gov/view_cat.php?categoryID=1484"
+        }
+
+    },
+             
+    "Topography and Roads": {
+        "description": "",
+
+        "OpenStreetMap": {
+            "connection": "libs/example/osm_standard.qlr",
+            "provider": "qlr", 
+            "description": "OpenStreetMap standard",
+            "keywords": [],
+            "metadata_url": "https://www.openstreetmap.org/"
+        },
+
+        "Bing Maps": {
+            "connection": "libs/example/bing_maps.qlr",
+            "provider": "qlr", 
+            "description": "Bing maps",
+            "keywords": ["Microsoft"],
+            "metadata_url": "https://wikipedia.org/wiki/Bing_Maps"
+        },
+
+        "Google Maps": {
+            "connection": "libs/example/google_maps.qlr",
+            "provider": "qlr", 
+            "description": "Google maps",
+            "keywords": ["Satellite"],
+            "metadata_url": "https://wikipedia.org/wiki/Google_Maps"
+        },
+
+        "Google Roads": {
+            "connection": "libs/example/google_roads.qlr",
+            "provider": "qlr", 
+            "description": "Google roads",
+            "keywords": [],
+            "metadata_url": "https://wikipedia.org/wiki/Google_Maps"
+        },
+
+        "Google Terrain": {
+            "connection": "libs/example/google_terrain_hybrid.qlr",
+            "provider": "qlr", 
+            "description": "Google terrain hybrid",
+            "keywords": [],
+            "metadata_url": "https://wikipedia.org/wiki/Google_Maps"
+        }
+    },
+
+    "Boundaries": {
+        "Countries of the World": {
+            "connection": "https://demo.boundlessgeo.com/geoserver/ows?typename=opengeo:countries",
+            "provider": "WFS", 
+            "description": "Countries of the world provided by Boundless",
+            "keywords": ["boundless"],
+            "metadata_url": ""
+        },
+
+        "Country boundaries": {
+            "connection": "libs/example/countries.gpkg",
+            "provider": "ogr", 
+            "description": "Boundaries of the world provided by Boundless",
+            "keywords": ["boundless"],
+            "metadata_url": ""
+        }
+
+    }
+
+
+}
