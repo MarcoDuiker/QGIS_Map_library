@@ -3,7 +3,7 @@
 name=Map Library
 qgisMinimumVersion=3.0
 description=A map library which makes it easy to add much used maps to your project.
-version=0.5
+version=0.6
 author=Marco Duiker - MD-kwadraat
 email=md@md-kwadraat.nl
 
@@ -21,7 +21,7 @@ repository=https://github.com/MarcoDuiker/QGIS_Map_library/
 # Tags are comma separated with spaces allowed
 tags=maps, layers, wms, wfs, ogr, library
 
-homepage=https://github.com/MarcoDuiker/QGIS_Map_library/issues/
+homepage=https://github.com/MarcoDuiker/QGIS_Map_library/
 category=Web
 icon=icon.png
 # experimental flag
