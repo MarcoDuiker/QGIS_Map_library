@@ -34,7 +34,7 @@ from qgis.PyQt.QtGui import QIcon, QDesktopServices
 from qgis.PyQt.QtWidgets import QAction, QApplication, QTreeWidget, \
                             QTreeWidgetItem, QMessageBox, QDialogButtonBox, \
                             QCompleter, QFileDialog
-from qgis.core import Qgis, QgsMessageLog, QgsProject, QgsLayerDefinition
+from qgis.core import Qgis, QgsMessageLog, QgsProject, QgsLayerDefinition, QgsSettings
 
 
 # Initialize Qt resources from file resources.py
@@ -62,10 +62,10 @@ class MapLibrary:
         """
         
         self.iface = iface
-        self.settings = QSettings()
+        self.settings = QgsSettings()
         self.plugin_dir = os.path.dirname(__file__)
         # initialize locale
-        locale = QSettings().value('locale/userLocale')[0:2]
+        locale = QgsSettings().value('locale/userLocale')[0:2]
         locale_path = os.path.join(
             self.plugin_dir,
             'i18n',
@@ -520,13 +520,13 @@ class MapLibrary:
                 self.add_layer_by_connection(layer_props)
                 
             # we might add something here for a "most recent layers" section
-            # this should be persistent between sessions, so added to Qsettings
+            # this should be persistent between sessions, so added to QgsSettings
             # dataFromChild()
             # dataToChild()
             # selectedItemCopy = selectedItem.clone()
             
             #def writeSettings(self):
-                #settings = QtCore.QSettings()
+                #settings = QtCore.QgsSettings()
                 #settings.beginGroup("TreeWidget")
                 #settings.setValue("items", TreeWidget.dataFromChild(
                 #                               self.invisibleRootItem()))
