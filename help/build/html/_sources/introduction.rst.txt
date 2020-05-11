@@ -178,6 +178,37 @@ The nice thing about this approach is that the QGIS layer definition file saves 
 
 If you create layers from local files the user must have access to the file paths which ends up in the ``.qlr`` file. Depending on system configuration it might be easier to work with relative paths (relative to the Map Library plugin folder) or rather with absolute paths.  
 
-For things to work out it might be necessary to edit the ``.glr`` files with a text editor to get the file paths right.
+For things to work out it might be necessary to edit the ``.qlr`` files with a text editor to get the file paths right.
+
+Distributing Map Libraries in an organization
+---------------------------------------------
+
+Many organizations distribute plugins and settings via the QGIS user profile to the end users. Often different profiles are distributed to different user groups.
+
+In the user profile the file ``QGIS3.ini`` plays a central role. A lot of settings, including plugins, plugin settings but also eg. the users tool bar settings are stored in this file.
+
+Because all of these different settings in this file it is not nice to push a new ``QGIS3.ini`` file to a group of users to distribute a new Map Library Index file.
+
+This can be avoided by offloading the plugin settings to a global settings file  ``your_QGIS_PKG_path/resources/qgis_global_settings.ini``. 
+To do this use a text editor to create ``your_QGIS_PKG_path/resources/qgis_global_settings.ini`` and copy to that file the appropriate section from the ``QGIS3.ini`` file (don't forget to remove that section from the ``QGIS3.ini`` as well) . This section will look something like this:
+
+::
+
+    [MapLibrary]
+    lib_path=https://your_url.org/your_library.json
+
+
+For more information on the QGIS configuration see: https://docs.qgis.org/3.10/en/docs/user_manual/introduction/qgis_configuration.html#running-qgis-with-advanced-settings
+
+For more information on distributing settings to users or user groups see the outdated but still informative: http://www.qgis.nl/2014/04/22/qgis-in-de-klas-onder-windows/?lang=en 
+
+
+
+
+
+
+
+
+
 
 

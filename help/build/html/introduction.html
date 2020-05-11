@@ -277,8 +277,22 @@
 <p>The nice thing about this approach is that the QGIS layer definition file saves all properties of the layer(group) like styling, scale dependent visibility, metadata, etc.</p>
 <p><strong>Beware:</strong></p>
 <p>If you create layers from local files the user must have access to the file paths which ends up in the <code class="docutils literal"><span class="pre">.qlr</span></code> file. Depending on system configuration it might be easier to work with relative paths (relative to the Map Library plugin folder) or rather with absolute paths.</p>
-<p>For things to work out it might be necessary to edit the <code class="docutils literal"><span class="pre">.glr</span></code> files with a text editor to get the file paths right.</p>
+<p>For things to work out it might be necessary to edit the <code class="docutils literal"><span class="pre">.qlr</span></code> files with a text editor to get the file paths right.</p>
 </div>
+</div>
+<div class="section" id="distributing-map-libraries-in-an-organization">
+<h3>Distributing Map Libraries in an organization<a class="headerlink" href="#distributing-map-libraries-in-an-organization" title="Permalink to this headline">¶</a></h3>
+<p>Many organizations distribute plugins and settings via the QGIS user profile to the end users. Often different profiles are distributed to different user groups.</p>
+<p>In the user profile the file <code class="docutils literal"><span class="pre">QGIS3.ini</span></code> plays a central role. A lot of settings, including plugins, plugin settings but also eg. the users tool bar settings are stored in this file.</p>
+<p>Because all of these different settings in this file it is not nice to push a new <code class="docutils literal"><span class="pre">QGIS3.ini</span></code> file to a group of users to distribute a new Map Library Index file.</p>
+<p>This can be avoided by offloading the plugin settings to a global settings file  <code class="docutils literal"><span class="pre">your_QGIS_PKG_path/resources/qgis_global_settings.ini</span></code>.
+To do this use a text editor to create <code class="docutils literal"><span class="pre">your_QGIS_PKG_path/resources/qgis_global_settings.ini</span></code> and copy to that file the appropriate section from the <code class="docutils literal"><span class="pre">QGIS3.ini</span></code> file (don’t forget to remove that section from the <code class="docutils literal"><span class="pre">QGIS3.ini</span></code> as well) . This section will look something like this:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">MapLibrary</span><span class="p">]</span>
+<span class="n">lib_path</span><span class="o">=</span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">your_url</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">your_library</span><span class="o">.</span><span class="n">json</span>
+</pre></div>
+</div>
+<p>For more information on the QGIS configuration see: <a class="reference external" href="https://docs.qgis.org/3.10/en/docs/user_manual/introduction/qgis_configuration.html#running-qgis-with-advanced-settings">https://docs.qgis.org/3.10/en/docs/user_manual/introduction/qgis_configuration.html#running-qgis-with-advanced-settings</a></p>
+<p>For more information on distributing settings to users or user groups see the outdated but still informative: <a class="reference external" href="http://www.qgis.nl/2014/04/22/qgis-in-de-klas-onder-windows/?lang=en">http://www.qgis.nl/2014/04/22/qgis-in-de-klas-onder-windows/?lang=en</a></p>
 </div>
 </div>
 </div>
@@ -302,6 +316,7 @@
 <li><a class="reference internal" href="#defining-valid-layers">Defining VALID layers</a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#distributing-map-libraries-in-an-organization">Distributing Map Libraries in an organization</a></li>
 </ul>
 </li>
 </ul>
