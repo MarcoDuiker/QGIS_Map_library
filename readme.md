@@ -10,4 +10,4 @@ Of course, entries in the library can have a metadata url associated, so the end
 
 You will find the plugin in the Vector menu. That's also the place where you can define the library the plugin uses.
 
-More info in the [help](https://marcoduiker.github.io/QGIS_BGT_Map_library/help/build/html/index.html). 
+More info in the [help](https://marcoduiker.github.io/QGIS_Map_library/help/build/html/index.html). 

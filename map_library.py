@@ -34,7 +34,7 @@ from qgis.PyQt.QtGui import QIcon, QDesktopServices
 from qgis.PyQt.QtWidgets import QAction, QApplication, QTreeWidget, \
                             QTreeWidgetItem, QMessageBox, QDialogButtonBox, \
                             QCompleter, QFileDialog
-from qgis.core import Qgis, QgsMessageLog, QgsProject, QgsLayerDefinition
+from qgis.core import Qgis, QgsMessageLog, QgsProject, QgsLayerDefinition, QgsSettings
 
 
 # Initialize Qt resources from file resources.py
@@ -62,10 +62,10 @@ class MapLibrary:
         """
         
         self.iface = iface
-        self.settings = QSettings()
+        self.settings = QgsSettings()
         self.plugin_dir = os.path.dirname(__file__)
         # initialize locale
-        locale = QSettings().value('locale/userLocale')[0:2]
+        locale = QgsSettings().value('locale/userLocale')[0:2]
         locale_path = os.path.join(
             self.plugin_dir,
             'i18n',
@@ -341,6 +341,7 @@ class MapLibrary:
         May be a local path, or an url
         '''
         
+        txt = None
         if path[0:4].lower() == 'http':
             QApplication.setOverrideCursor(QtCore.Qt.WaitCursor)
             try:
@@ -362,7 +363,7 @@ class MapLibrary:
                # path is relative to plugin dir
                path = os.path.join(self.plugin_dir, path)
             try:
-                with open(path,'r') as f:
+                with open(path,'r',encoding='utf-8') as f:
                     txt = f.read()
             except Exception as e:
                 self.iface.messageBar().pushMessage("Error",
@@ -394,6 +395,7 @@ class MapLibrary:
                                       "spatialite","WFS"]
         supported_raster_providers = ["gdal","wcs","wms"]
         
+        layer = None
         QApplication.setOverrideCursor(QtCore.Qt.WaitCursor)
         if layer_props['provider'] in supported_vector_providers:
             if not layer_props['provider'].lower() == "wfs":
@@ -414,7 +416,7 @@ class MapLibrary:
                     self.tr(u'Loading layer failed. ') + 
                     self.tr(u'See message log for more info.'), 
                     level = Qgis.Critical)
-                QgsMessageLog.logMessage(u'Loading layer failed: ' + str(e), 
+                QgsMessageLog.logMessage(u'Loading vector layer failed: ' + str(e), 
                                           'Map Library')
             finally:
                 QApplication.restoreOverrideCursor()
@@ -432,7 +434,7 @@ class MapLibrary:
                     self.tr(u'Loading layer failed. ') + 
                     self.tr(u'See message log for more info.'), 
                     level = Qgis.Critical)
-                QgsMessageLog.logMessage(u'Loading layer failed: ' + str(e), 
+                QgsMessageLog.logMessage(u'Loading raster layer failed: ' + str(e), 
                                           'Map Library')
             finally:
                 QApplication.restoreOverrideCursor()
@@ -456,6 +458,7 @@ class MapLibrary:
         Adds chosen layer to project by a local or remote qlr file
         '''
 
+        path = None
         if not layer_props['connection'][0:4].lower() == 'http':
             path = layer_props['connection']
             if (not os.path.exists(path)) \
@@ -482,20 +485,21 @@ class MapLibrary:
                                     layer_props['connection'])
                 path = os.path.join(self.plugin_dir,'libs','cache',
                                     os.path.basename(layer_props['connection']))
-                with open(path, 'w') as f:
+                with open(path, 'w', encoding='utf-8') as f:
                     f.write(qlr_content)
             except Exception as e:
                 self.iface.messageBar().pushMessage("Error",
                     self.tr(u'Loading layer failed. ') + 
                     self.tr(u'See message log for more info.'), 
                     level = Qgis.Critical)
-                QgsMessageLog.logMessage(u'Loading layer failed: ' + str(e), 
+                QgsMessageLog.logMessage(u'Loading layer from qlr failed: ' + str(e), 
                                           'Map Library')
-                
-        QgsLayerDefinition.loadLayerDefinition(
-                path, 
-                self.project, 
-                self.project.layerTreeRoot())
+                return
+        if path:
+            QgsLayerDefinition.loadLayerDefinition(
+                    path, 
+                    self.project, 
+                    self.project.layerTreeRoot())
                 
 
     def add_layer(self, item = None, column = None):
@@ -516,13 +520,13 @@ class MapLibrary:
                 self.add_layer_by_connection(layer_props)
                 
             # we might add something here for a "most recent layers" section
-            # this should be persistent between sessions, so added to Qsettings
+            # this should be persistent between sessions, so added to QgsSettings
             # dataFromChild()
             # dataToChild()
             # selectedItemCopy = selectedItem.clone()
             
             #def writeSettings(self):
-                #settings = QtCore.QSettings()
+                #settings = QtCore.QgsSettings()
                 #settings.beginGroup("TreeWidget")
                 #settings.setValue("items", TreeWidget.dataFromChild(
                 #                               self.invisibleRootItem()))
