@@ -26,7 +26,7 @@ Then the Map Library can be browsed or searched via the search bar.
 
 Once an interesting layer is found, metadata can be accessed via the `Metadata` button. A layer can be added to the project by double clicking the item, or by pressing the `Add` button.
 
-Via the settings of the plugin (accesible via the Map Library menu in the Web menu of QGIS), the library can be selected.
+Via the settings of the plugin (accesible via the Map Library menu in the Web menu of QGIS), the library can be selected. Optionaly the default alphabetical sorting of the map library can be turned off.
 
 
 Managing Libraries

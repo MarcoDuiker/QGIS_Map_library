@@ -554,7 +554,12 @@ class MapLibrary:
             if value is None: 
                 return
             elif isinstance(value, dict):
-                for key, val in sorted(value.items()):
+                if self.settings.value("MapLibrary/sort", True):
+                    items = sorted(value.items())
+                else:
+                    items = value.items()
+                #for key, val in sorted(value.items()):
+                for key, val in items:
                     meta_items = []
                     if "description" in val or ("connection" in val and "provider" in val):
                         # we have a description on a group or a layer
@@ -630,7 +635,7 @@ class MapLibrary:
                     filter = '*.json')[0]       
         self.settings_dlg.lib_path_ldt.setText(path)
         # we might make this a relative path to the plugin dir, 
-        # by why bother?
+        # but why bother?
 
 
     def run_settings(self):
@@ -638,7 +643,10 @@ class MapLibrary:
         Shows the settings dialog
         '''
 
-        self.settings_dlg.lib_path_ldt.setText(self.settings.value("MapLibrary/lib_path", ""))
+        self.settings_dlg.sort_cbx.setChecked(self.settings.value(
+            "MapLibrary/sort", True))
+        self.settings_dlg.lib_path_ldt.setText(self.settings.value(
+            "MapLibrary/lib_path", ""))
         if self.settings_dlg.lib_path_ldt.text() == "":
             self.settings_dlg.lib_path_ldt.setPlaceholderText("https://")
         self.settings_dlg.show()
@@ -655,7 +663,8 @@ class MapLibrary:
                 # make more canonical?
                 pass
             self.settings.setValue("MapLibrary/lib_path", path)
-
+            self.settings.setValue("MapLibrary/sort", 
+                                   self.settings_dlg.sort_cbx.isChecked())
 
     def show_help(self):
         '''

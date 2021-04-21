@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>416</width>
-    <height>109</height>
+    <height>143</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -60,6 +60,13 @@
       </size>
      </property>
     </spacer>
+   </item>
+   <item>
+    <widget class="QCheckBox" name="sort_cbx">
+     <property name="text">
+      <string>Sort library alphabetically</string>
+     </property>
+    </widget>
    </item>
    <item>
     <widget class="QDialogButtonBox" name="button_box">

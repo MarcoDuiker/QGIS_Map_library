@@ -3,17 +3,17 @@
 <context>
     <name>MapLibrary</name>
     <message>
-        <location filename="../map_library.py" line="253"/>
+        <location filename="../map_library.py" line="262"/>
         <source>&amp;Map Library</source>
         <translation>&amp;Kaarten Bibliotheek</translation>
     </message>
     <message>
-        <location filename="../map_library.py" line="225"/>
+        <location filename="../map_library.py" line="234"/>
         <source>Map Library</source>
         <translation>Kaarten Bibliotheek</translation>
     </message>
     <message>
-        <location filename="../map_library.py" line="357"/>
+        <location filename="../map_library.py" line="369"/>
         <source>Reading file </source>
         <translation>Bestand lezen</translation>
     </message>
@@ -28,7 +28,7 @@
         <translation type="obsolete">Kaartlaag toevoegen mislukt</translation>
     </message>
     <message>
-        <location filename="../map_library.py" line="575"/>
+        <location filename="../map_library.py" line="617"/>
         <source>See message log for more info.</source>
         <translation>Meer informatie op het paneel logboekmeldingen.</translation>
     </message>
@@ -43,64 +43,64 @@
         <translation type="obsolete">mislukt.</translation>
     </message>
     <message>
-        <location filename="../map_library.py" line="357"/>
+        <location filename="../map_library.py" line="369"/>
         <source>failed. </source>
         <translation>mislukt. </translation>
     </message>
     <message>
-        <location filename="../map_library.py" line="467"/>
+        <location filename="../map_library.py" line="491"/>
         <source>Loading layer failed. </source>
         <translation>Kaartlaag toevoegen mislukt. </translation>
     </message>
     <message>
-        <location filename="../map_library.py" line="575"/>
+        <location filename="../map_library.py" line="617"/>
         <source>Initializing Library failed. </source>
         <translation>Bibliotheek inlezen mislukt. </translation>
     </message>
     <message>
-        <location filename="../map_library.py" line="232"/>
+        <location filename="../map_library.py" line="241"/>
         <source>Settings</source>
         <translation>Instellingen</translation>
     </message>
     <message>
-        <location filename="../map_library.py" line="232"/>
+        <location filename="../map_library.py" line="241"/>
         <source>Map Library settings</source>
         <translation>Kaarten Bibliotheek instellingen</translation>
     </message>
     <message>
-        <location filename="../map_library.py" line="241"/>
+        <location filename="../map_library.py" line="250"/>
         <source>Help</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../map_library.py" line="241"/>
+        <location filename="../map_library.py" line="250"/>
         <source>Show help</source>
         <translation>Toon help</translation>
     </message>
     <message>
-        <location filename="../map_library.py" line="590"/>
+        <location filename="../map_library.py" line="632"/>
         <source>Select Map Library:</source>
         <translation>Selecteer Kaarten Bibliotheek</translation>
     </message>
     <message>
-        <location filename="../map_library.py" line="421"/>
+        <location filename="../map_library.py" line="443"/>
         <source>Layer provider &quot;</source>
         <translation>Laag provider &quot;</translation>
     </message>
     <message>
-        <location filename="../map_library.py" line="421"/>
+        <location filename="../map_library.py" line="443"/>
         <source>&quot; not supported.</source>
         <translation> &quot; wordt niet ondersteund.</translation>
     </message>
     <message>
         <location filename="../map_library.py" line="105"/>
         <source>name</source>
-        <translation>naam</translation>
+        <translation type="obsolete">naam</translation>
     </message>
     <message>
         <location filename="../map_library.py" line="105"/>
         <source>description</source>
-        <translation>omschrijving</translation>
+        <translation type="obsolete">omschrijving</translation>
     </message>
 </context>
 <context>
@@ -180,6 +180,10 @@
         <source>...</source>
         <translation></translation>
     </message>
-
+    <message>
+        <location filename="../map_library_settings_dialog_base.ui" line="67"/>
+        <source>Sort library alphabetically</source>
+        <translation>Sorteer bibliotheek alfabetisch</translation>
+    </message>
 </context>
 </TS>
