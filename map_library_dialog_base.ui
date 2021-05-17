@@ -37,7 +37,7 @@
     </widget>
    </item>
    <item>
-    <widget class="QTreeWidget" name="layer_twg">
+    <widget class="QTreeWidgetCustom" name="layer_twg">
      <property name="toolTip">
       <string>Add a layer from this library to your project by double clicking</string>
      </property>
@@ -106,6 +106,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QTreeWidgetCustom</class>
+   <extends>QTreeWidget</extends>
+   <header>maplibrary.QTreeWidgetCustom.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

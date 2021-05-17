@@ -21,6 +21,7 @@ changelog=  0.7 improved error handling, fixed encoding problem on remote qlr wi
             0.9 added the option to disable alphabetical sorting.
             x.x fixed bug, where sort settings could not be read correctly after restart of QGIS.
             x.x fixed bug, where metadata link was opened when return key was pressed.
+            x.x added the option to filter search results and navigate them with up/down keys.
 
 # Tags are comma separated with spaces allowed
 tags=maps, layers, wms, wfs, ogr, library
