@@ -16,7 +16,10 @@ repository=https://github.com/MarcoDuiker/QGIS_Map_library/
 # Recommended items:
 
 # Uncomment the following line and add your changelog:
-changelog= 0.7: improved error handling, fixed encoding problem on remote qlr with non-ascii characters. 0.8 moved settings to QgsSettings so a global settings file other than QGIS3.ini can be used. 0.9 added the option to disable alphabetical sorting
+changelog=  0.7 improved error handling, fixed encoding problem on remote qlr with non-ascii characters. 
+            0.8 moved settings to QgsSettings so a global settings file other than QGIS3.ini can be used. 
+            0.9 added the option to disable alphabetical sorting.
+            x.x fixed bug, where sort settings could not be read correctly after restart of QGIS.
 
 # Tags are comma separated with spaces allowed
 tags=maps, layers, wms, wfs, ogr, library
