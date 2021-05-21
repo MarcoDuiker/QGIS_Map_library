@@ -554,7 +554,7 @@ class MapLibrary:
             if value is None: 
                 return
             elif isinstance(value, dict):
-                if self.settings.value("MapLibrary/sort", True):
+                if self.valueToBool(self.settings.value("MapLibrary/sort", True)):
                     items = sorted(value.items())
                 else:
                     items = value.items()
@@ -643,8 +643,8 @@ class MapLibrary:
         Shows the settings dialog
         '''
 
-        self.settings_dlg.sort_cbx.setChecked(self.settings.value(
-            "MapLibrary/sort", True))
+        self.settings_dlg.sort_cbx.setChecked(self.valueToBool(self.settings.value(
+            "MapLibrary/sort", True)))
         self.settings_dlg.lib_path_ldt.setText(self.settings.value(
             "MapLibrary/lib_path", ""))
         if self.settings_dlg.lib_path_ldt.text() == "":
@@ -665,6 +665,13 @@ class MapLibrary:
             self.settings.setValue("MapLibrary/lib_path", path)
             self.settings.setValue("MapLibrary/sort", 
                                    self.settings_dlg.sort_cbx.isChecked())
+
+    @staticmethod
+    def valueToBool(value):
+        if isinstance(value, bool):
+            return value
+        else:
+            return value.lower() == 'true'
 
     def show_help(self):
         '''
