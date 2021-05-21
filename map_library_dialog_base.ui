@@ -58,6 +58,9 @@
        <property name="text">
         <string>Metadata</string>
        </property>
+       <property name="autoDefault">
+        <bool>false</bool>
+       </property>
       </widget>
      </item>
      <item>
@@ -81,6 +84,9 @@
        <property name="text">
         <string>Close</string>
        </property>
+       <property name="autoDefault">
+        <bool>false</bool>
+       </property>
       </widget>
      </item>
      <item>
@@ -90,6 +96,9 @@
        </property>
        <property name="text">
         <string>Add</string>
+       </property>
+       <property name="autoDefault">
+        <bool>false</bool>
        </property>
       </widget>
      </item>
