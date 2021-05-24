@@ -33,7 +33,7 @@ from qgis.PyQt.QtCore import QSettings, QTranslator, qVersion,\
 from qgis.PyQt.QtGui import QIcon, QDesktopServices
 from qgis.PyQt.QtWidgets import QAction, QApplication, QTreeWidget, \
                             QTreeWidgetItem, QMessageBox, QDialogButtonBox, \
-                            QCompleter, QFileDialog
+                            QCompleter, QFileDialog, QTreeWidgetItemIterator
 from qgis.core import Qgis, QgsMessageLog, QgsProject, QgsLayerDefinition, QgsSettings
 
 
@@ -45,6 +45,8 @@ from .map_library_dialog import MapLibraryDialog
 from .map_library_settings_dialog import MapLibrarySettingsDialog
 
 from .network import networkaccessmanager
+
+import numpy as np
 
 __author__ = 'Marco Duiker MD-kwadraat'
 __date__ = 'Februari 2019'
@@ -125,8 +127,10 @@ class MapLibrary:
         self.layerTree.itemSelectionChanged.connect(self.update_buttons)
         self.layerTree.itemDoubleClicked.connect(self.add_layer)
                 
+        self.layerTree.keyUp.connect(self.on_key_up)
+        self.layerTree.keyDown.connect(self.on_key_down)
         self.dlg.search_ldt.textChanged.connect(self.find_next_item)
-        self.dlg.search_ldt.returnPressed.connect(self.find_next_item)
+        self.dlg.search_ldt.returnPressed.connect(self.on_return)
         self.dlg.close_btn.clicked.connect(self.close_dialog)
         self.dlg.add_btn.clicked.connect(self.add_layer)
         self.dlg.metadata_btn.clicked.connect(self.show_metadata)
@@ -137,6 +141,8 @@ class MapLibrary:
         self.dlg.metadata_btn.setEnabled(False)
         self.dlg.add_btn.setEnabled(False)
         
+        self.found_items = []
+
     # noinspection PyMethodMayBeStatic
     def tr(self, message):
         """Get the translation for a string using Qt translation API.
@@ -274,13 +280,28 @@ class MapLibrary:
         '''
         Finds search string in tree view
         '''
-        
+        self.tree_items = []
         self.dlg.search_ldt.setStyleSheet("QLineEdit {color: black;}")
-        
+
+        # Iterate over all tree items for new search
+        it = QTreeWidgetItemIterator(self.layerTree)
+        while it.value():
+            item = it.value()
+            item.setHidden(False)
+            self.layerTree.expandItem(item)
+            self.tree_items.append(item)
+            it += 1
+
         searchString = self.dlg.search_ldt.text()
+
+        # Reset search and filtering for short search strings
         if len(searchString) < 3:
+            for item in self.tree_items:
+                item.setHidden(False)
+                self.layerTree.collapseItem(item)                
             return
-        
+
+        # Get search results
         if not self.last_search_string == searchString: 
             self.last_search_string = searchString
             self.search_index = 0
@@ -290,19 +311,63 @@ class MapLibrary:
                     searchString, 
                     QtCore.Qt.MatchContains | QtCore.Qt.MatchRecursive, 
                     column)
+
+            self.found_items = self.get_unique_found_items(self.found_items)
             if self.found_items:
-                self.layerTree.setCurrentItem(
-                        self.found_items[self.search_index])
+                self.layerTree.setCurrentItem(self.found_items[self.search_index])
             else:
                 self.dlg.search_ldt.setStyleSheet("QLineEdit {color: red;}")
         else:
-            self.search_index = self.search_index + 1
             try:
-                self.layerTree.setCurrentItem(
-                        self.found_items[self.search_index])
+                self.layerTree.setCurrentItem(self.found_items[self.search_index])
             except:
                 self.dlg.search_ldt.setStyleSheet("QLineEdit {color: red;}")
 
+        if self.valueToBool(self.settings.value("MapLibrary/filter", False)):
+            # Filter search results
+            if self.found_items:
+                self.items_to_hide = np.setdiff1d(
+                    self.tree_items,
+                    self.found_items)
+                # Hide items
+                for item in self.tree_items:
+                    self.hide_item_and_children(item)        
+
+    def get_unique_found_items(self,found_items):
+        indexes = np.unique(found_items, return_index=True)[1]
+        return[found_items[index] for index in sorted(indexes)]
+
+    def hide_item_and_children(self,item):
+        if item.childCount() == 0:
+            if item in self.items_to_hide:
+                item.setHidden(True)
+        else:
+            if self.are_all_children_hidden(item):
+                if item in self.items_to_hide:
+                    item.setHidden(True)
+            else:
+                for n in range(0, item.childCount()):
+                    self.hide_item_and_children(item.child(n))
+                    if n == item.childCount()-1:
+                        if self.are_all_children_hidden(item):
+                            if item in self.items_to_hide:
+                                item.setHidden(True)
+                   
+    def are_all_children_hidden(self, item):
+        for n in range(0, item.childCount()):
+            if not item.child(n).isHidden():
+                return False
+        return True
+    
+    def go_to_next_result(self):
+        try:
+            self.search_index = self.search_index + 1
+            self.layerTree.setCurrentItem(
+                self.found_items[self.search_index])
+        except:
+            self.search_index = 0
+            self.layerTree.setCurrentItem(
+                self.found_items[self.search_index])
 
     def props_from_tree_item(self, item):
         '''
@@ -642,9 +707,13 @@ class MapLibrary:
         '''
         Shows the settings dialog
         '''
+        # Close main dialog before editing settings dialog to force reload
+        self.close_dialog()
 
         self.settings_dlg.sort_cbx.setChecked(self.valueToBool(self.settings.value(
             "MapLibrary/sort", True)))
+        self.settings_dlg.filter_cbx.setChecked(self.valueToBool(self.settings.value(
+            "MapLibrary/filter", False)))
         self.settings_dlg.lib_path_ldt.setText(self.settings.value(
             "MapLibrary/lib_path", ""))
         if self.settings_dlg.lib_path_ldt.text() == "":
@@ -665,6 +734,8 @@ class MapLibrary:
             self.settings.setValue("MapLibrary/lib_path", path)
             self.settings.setValue("MapLibrary/sort", 
                                    self.settings_dlg.sort_cbx.isChecked())
+            self.settings.setValue("MapLibrary/filter", 
+                                   self.settings_dlg.filter_cbx.isChecked())
 
     @staticmethod
     def valueToBool(value):
@@ -681,3 +752,25 @@ class MapLibrary:
         QDesktopServices().openUrl(QUrl.fromLocalFile( \
             os.path.join("file://", self.plugin_dir, 'help/build/html', \
                          'index.html')))
+
+    def on_key_up(self):
+        if self.valueToBool(self.settings.value("MapLibrary/filter", False)):
+            try:
+                self.search_index = self.search_index - 1
+                self.layerTree.setCurrentItem(
+                    self.found_items[self.search_index])
+            except:
+                self.search_index = len(self.found_items) - 1
+                self.layerTree.setCurrentItem(
+                    self.found_items[self.search_index])
+
+    def on_key_down(self):
+        if self.valueToBool(self.settings.value("MapLibrary/filter", False)):
+            self.go_to_next_result()
+    
+    def on_return(self):
+        if self.valueToBool(self.settings.value("MapLibrary/filter", False)):
+            if not self.layerTree.hasFocus():
+                self.layerTree.setFocus()
+                self.search_index = - 1
+        self.go_to_next_result()
