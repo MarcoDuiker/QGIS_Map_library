@@ -710,8 +710,10 @@ class MapLibrary:
         '''
         Shows the settings dialog
         '''
-        # Close main dialog before editing settings dialog to force reload
+        # Close main dialog and reset search string before editing settings dialog to force reload
         self.close_dialog()
+        self.last_search_string = ""
+        self.dlg.search_ldt.setText("")
 
         self.settings_dlg.sort_cbx.setChecked(self.valueToBool(self.settings.value(
             "MapLibrary/sort", True)))
