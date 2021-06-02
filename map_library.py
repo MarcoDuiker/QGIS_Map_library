@@ -360,14 +360,17 @@ class MapLibrary:
         return True
     
     def go_to_next_result(self):
-        try:
-            self.search_index = self.search_index + 1
-            self.layerTree.setCurrentItem(
-                self.found_items[self.search_index])
-        except:
-            self.search_index = 0
-            self.layerTree.setCurrentItem(
-                self.found_items[self.search_index])
+        if self.valueToBool(self.settings.value("MapLibrary/filter", False)):
+            self.layerTree.setCurrentItem(self.layerTree.itemBelow(self.layerTree.currentItem()))
+        else:
+            try:
+                self.search_index = self.search_index + 1
+                self.layerTree.setCurrentItem(
+                    self.found_items[self.search_index])
+            except:
+                self.search_index = 0
+                self.layerTree.setCurrentItem(
+                    self.found_items[self.search_index])
 
     def props_from_tree_item(self, item):
         '''
@@ -755,14 +758,7 @@ class MapLibrary:
 
     def on_key_up(self):
         if self.valueToBool(self.settings.value("MapLibrary/filter", False)):
-            try:
-                self.search_index = self.search_index - 1
-                self.layerTree.setCurrentItem(
-                    self.found_items[self.search_index])
-            except:
-                self.search_index = len(self.found_items) - 1
-                self.layerTree.setCurrentItem(
-                    self.found_items[self.search_index])
+            self.layerTree.setCurrentItem(self.layerTree.itemAbove(self.layerTree.currentItem()))
 
     def on_key_down(self):
         if self.valueToBool(self.settings.value("MapLibrary/filter", False)):
