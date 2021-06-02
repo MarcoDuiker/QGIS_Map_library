@@ -3,7 +3,7 @@
 name=Map Library
 qgisMinimumVersion=3.0
 description=A map library which makes it easy to add much used maps to your project.
-version=1.0
+version=1.1
 author=Marco Duiker - MD-kwadraat
 email=md@md-kwadraat.nl
 
