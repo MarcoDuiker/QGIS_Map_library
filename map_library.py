@@ -21,6 +21,7 @@
  ***************************************************************************/
 """
 
+import ast
 import os.path
 import re
 import json
@@ -35,7 +36,7 @@ from qgis.PyQt.QtWidgets import QAction, QApplication, QTreeWidget, \
                             QTreeWidgetItem, QMessageBox, QDialogButtonBox, \
                             QCompleter, QFileDialog, QTreeWidgetItemIterator
 from qgis.core import Qgis, QgsMessageLog, QgsProject, QgsLayerDefinition, QgsSettings
-
+from qgis.gui import QgsMessageBar
 
 # Initialize Qt resources from file resources.py
 from .resources import *
@@ -97,6 +98,8 @@ class MapLibrary:
              "keywords",        # for searching in the lib
              "connection",      # QGIS data connection string or path to qlr
              "provider",        # QGIS layer provider or `qlr` for qlr files
+             "on_select_message",# a message shown when the layer is selected
+             "on_load_message",  # a message shown when the layer is loaded
              "metadata_url"     # presented in lib as well as used as identifier
                                 # for the layer in the QGIS metadata tab
         ]                       # first two items are shown in tree
@@ -140,7 +143,11 @@ class MapLibrary:
         #enable/ disable buttons
         self.dlg.metadata_btn.setEnabled(False)
         self.dlg.add_btn.setEnabled(False)
-        
+
+        # add a message bar to the dialog for the on select messages
+        self.dlg_msg_bar = QgsMessageBar()
+        self.dlg.layout().insertWidget(0, self.dlg_msg_bar)
+
         self.found_items = []
 
     # noinspection PyMethodMayBeStatic
@@ -381,8 +388,7 @@ class MapLibrary:
         for i,key in enumerate(self.layerTree_items):
             d[key] = item.text(i)
         return d
-        
-        
+           
     def update_buttons(self):
         '''
         Updates the buttons on selection change.
@@ -402,7 +408,9 @@ class MapLibrary:
         else:
             self.dlg.metadata_btn.setEnabled(False)
 
-
+        if layer_props['on_select_message']:
+            self.show_layer_message(layer_props['on_select_message'], 'select')
+            
     def get_text_contents_from_path(self, path):
         '''
         Gets the text content from a path.
@@ -586,6 +594,9 @@ class MapLibrary:
                 self.add_layer_by_qlr(layer_props)
             else:
                 self.add_layer_by_connection(layer_props)
+
+            if layer_props['on_load_message']:
+                self.show_layer_message(layer_props['on_load_message'], 'load')
                 
             # we might add something here for a "most recent layers" section
             # this should be persistent between sessions, so added to QgsSettings
@@ -599,6 +610,60 @@ class MapLibrary:
                 #settings.setValue("items", TreeWidget.dataFromChild(
                 #                               self.invisibleRootItem()))
                 #settings.endGroup()
+
+    def show_layer_message(self, message, context):
+        '''
+        Shows a message bar in either the map view or the dialog,
+        based on the defined layer properties and the context.
+
+        context = select: message bar in dialog
+        contect = load: the main message bar
+        '''
+
+        levels = {  'Info':         Qgis.Info,
+                    'Warning':      Qgis.Warning,
+                    'Critical':     Qgis.Critical,
+                    'Succes':       Qgis.Success
+        }
+
+        level = 'Info'
+        duration = 0
+        
+        if message.startswith('{') and message.endswith('}'):
+            # create a dict from this string
+            try:
+                message = ast.literal_eval(message)
+            except:
+                QgsMessageLog.logMessage(u'Error interpreting message definition %s.' % message, 
+                                          'Map Library') 
+                
+        if type(message) == str:
+            msg = message
+        else:
+            if 'msg' in message:
+                msg = message['msg']
+            else:
+                QgsMessageLog.logMessage(u'Error showing message; Message string not found.', 
+                                          'Map Library') 
+            if 'level' in message:
+                QgsMessageLog.logMessage(u'Error in message level; level %s not defined.' % level, 
+                                          'Map Library') 
+                level =  message['level']
+            if 'duration' in message \
+            and type(message['duration']) == int:
+                duration = message['duration']
+        
+        if not level in levels:
+            level = 'Info'
+
+        if context == 'select':
+            self.dlg_msg_bar.pushMessage( msg, 
+                                          level=levels[level], 
+                                          duration=duration )  
+        if context == 'load':
+            self.iface.messageBar().pushMessage(  msg, 
+                                                  level=levels[level], 
+                                                  duration=duration )  
 
 
     def add_lib_to_tree(self, name, path):
@@ -635,6 +700,10 @@ class MapLibrary:
                             if key_name in val:
                                 if isinstance(val[key_name], (list, tuple)):
                                     meta_items.append(",".join(val[key_name]))
+                                elif isinstance(val[key_name], (dict)):
+                                    # sadly we cannot insert a dict here, so we
+                                    # convert it to a string. Later we need to reverse!
+                                    meta_items.append(str(val[key_name]))
                                 else:
                                     meta_items.append(val[key_name])
                             else:

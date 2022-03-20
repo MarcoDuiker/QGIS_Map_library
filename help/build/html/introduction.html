@@ -111,6 +111,7 @@
         <span class="s2">&quot;provider&quot;</span><span class="p">:</span> <span class="s2">&quot;wms&quot;</span><span class="p">,</span>
         <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Nasa Blue Marble provided by Boundless&quot;</span><span class="p">,</span>
         <span class="s2">&quot;keywords&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;boundless&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;on_load_message&quot;</span><span class="p">:</span> <span class="s2">&quot;Please enjoy this beautiful image&quot;</span><span class="p">,</span>
         <span class="s2">&quot;metadata_url&quot;</span><span class="p">:</span> <span class="s2">&quot;https://visibleearth.nasa.gov/view_cat.php?categoryID=1484&quot;</span>
     <span class="p">}</span>
 <span class="p">},</span>
@@ -188,7 +189,7 @@
 </li>
 </ul>
 </dd>
-<dt>Optionally a layer can have the following properties</dt>
+<dt>Optionally a layer can have the following properties:</dt>
 <dd><ul class="first last simple">
 <li><dl class="first docutils">
 <dt><code class="docutils literal"><span class="pre">description</span></code></dt>
@@ -210,6 +211,71 @@
 <dt><code class="docutils literal"><span class="pre">metadata_url</span></code></dt>
 <dd><ul class="first last">
 <li>an URL to a page containing metadata for the layer</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">on_load_message</span></code></dt>
+<dd><ul class="first last">
+<li>a message to show the user when the layer gets loaded. This message is shown in the message bar</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">on_select_message</span></code></dt>
+<dd><ul class="first last">
+<li>a message to show the user when the user selects the layer in the library. This message is shown in a message bar in the library dialog.</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+<p>Both the <code class="docutils literal"><span class="pre">on_load_message</span></code> and the <code class="docutils literal"><span class="pre">on_select_message</span></code> can be a simple string. In that case the message is shown as an “Info” message on a blue background and should be clicked away by the user.</p>
+<p>Both the <code class="docutils literal"><span class="pre">on_load_message</span></code> and the <code class="docutils literal"><span class="pre">on_select_message</span></code> can be a dictionary like this:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>&quot;on_select_message&quot;: {
+      &quot;msg&quot;: &quot;Just an example critical select message&quot;,
+      &quot;level&quot;: &quot;Critical&quot;,
+      &quot;duration&quot;: 5
+}
+</pre></div>
+</div>
+<dl class="docutils">
+<dt>These properties mean:</dt>
+<dd><ul class="first last simple">
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">msg</span></code></dt>
+<dd><ul class="first last">
+<li>(required) The message shown to the user.</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">level</span></code></dt>
+<dd><ul class="first last">
+<li><dl class="first docutils">
+<dt>(optional, defaults to <code class="docutils literal"><span class="pre">Info</span></code>) The message level as in this table:</dt>
+<dd><ul class="first last">
+<li><code class="docutils literal"><span class="pre">Info</span></code>:      background color will be blue</li>
+<li><code class="docutils literal"><span class="pre">Warning</span></code>:   background color will be orange</li>
+<li><code class="docutils literal"><span class="pre">Critical</span></code>:  background color will be red</li>
+<li><code class="docutils literal"><span class="pre">Succes</span></code>:    background color will be green</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">duration</span></code></dt>
+<dd><ul class="first last">
+<li>(optional, defaults to 0) The duration in seconds the message will be shown. When zero, this will be indefinitely.</li>
 </ul>
 </dd>
 </dl>
@@ -242,6 +308,14 @@
 <li><code class="docutils literal"><span class="pre">gdal</span></code></li>
 <li><code class="docutils literal"><span class="pre">wcs</span></code></li>
 <li><code class="docutils literal"><span class="pre">wms</span></code></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Any layer type via qlr file</dt>
+<dd><ul class="first last">
+<li><code class="docutils literal"><span class="pre">qlr</span></code></li>
 </ul>
 </dd>
 </dl>

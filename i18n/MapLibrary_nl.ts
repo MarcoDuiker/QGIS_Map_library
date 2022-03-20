@@ -3,17 +3,17 @@
 <context>
     <name>MapLibrary</name>
     <message>
-        <location filename="../map_library.py" line="268"/>
+        <location filename="../map_library.py" line="275"/>
         <source>&amp;Map Library</source>
         <translation>&amp;Kaarten Bibliotheek</translation>
     </message>
     <message>
-        <location filename="../map_library.py" line="240"/>
+        <location filename="../map_library.py" line="247"/>
         <source>Map Library</source>
         <translation>Kaarten Bibliotheek</translation>
     </message>
     <message>
-        <location filename="../map_library.py" line="434"/>
+        <location filename="../map_library.py" line="445"/>
         <source>Reading file </source>
         <translation>Bestand lezen</translation>
     </message>
@@ -28,7 +28,7 @@
         <translation type="obsolete">Kaartlaag toevoegen mislukt</translation>
     </message>
     <message>
-        <location filename="../map_library.py" line="682"/>
+        <location filename="../map_library.py" line="754"/>
         <source>See message log for more info.</source>
         <translation>Meer informatie op het paneel logboekmeldingen.</translation>
     </message>
@@ -43,54 +43,54 @@
         <translation type="obsolete">mislukt.</translation>
     </message>
     <message>
-        <location filename="../map_library.py" line="434"/>
+        <location filename="../map_library.py" line="445"/>
         <source>failed. </source>
         <translation>mislukt. </translation>
     </message>
     <message>
-        <location filename="../map_library.py" line="556"/>
+        <location filename="../map_library.py" line="567"/>
         <source>Loading layer failed. </source>
         <translation>Kaartlaag toevoegen mislukt. </translation>
     </message>
     <message>
-        <location filename="../map_library.py" line="682"/>
+        <location filename="../map_library.py" line="754"/>
         <source>Initializing Library failed. </source>
         <translation>Bibliotheek inlezen mislukt. </translation>
     </message>
     <message>
-        <location filename="../map_library.py" line="247"/>
+        <location filename="../map_library.py" line="254"/>
         <source>Settings</source>
         <translation>Instellingen</translation>
     </message>
     <message>
-        <location filename="../map_library.py" line="247"/>
+        <location filename="../map_library.py" line="254"/>
         <source>Map Library settings</source>
         <translation>Kaarten Bibliotheek instellingen</translation>
     </message>
     <message>
-        <location filename="../map_library.py" line="256"/>
+        <location filename="../map_library.py" line="263"/>
         <source>Help</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../map_library.py" line="256"/>
+        <location filename="../map_library.py" line="263"/>
         <source>Show help</source>
         <translation>Toon help</translation>
     </message>
     <message>
-        <location filename="../map_library.py" line="697"/>
+        <location filename="../map_library.py" line="769"/>
         <source>Select Map Library:</source>
         <translation>Selecteer Kaarten Bibliotheek</translation>
     </message>
     <message>
-        <location filename="../map_library.py" line="508"/>
+        <location filename="../map_library.py" line="519"/>
         <source>Layer provider &quot;</source>
         <translation>Laag provider &quot;</translation>
     </message>
     <message>
-        <location filename="../map_library.py" line="508"/>
+        <location filename="../map_library.py" line="519"/>
         <source>&quot; not supported.</source>
-        <translation> &quot; wordt niet ondersteund.</translation>
+        <translation>&quot; wordt niet ondersteund.</translation>
     </message>
     <message>
         <location filename="../map_library.py" line="105"/>
@@ -118,7 +118,7 @@
     <message>
         <location filename="../map_library_dialog_base.ui" line="32"/>
         <source>search </source>
-        <translation>zoek</translation>
+        <translation>zoek </translation>
     </message>
     <message>
         <location filename="../map_library_dialog_base.ui" line="42"/>

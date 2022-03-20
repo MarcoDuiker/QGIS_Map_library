@@ -3,7 +3,7 @@
 name=Map Library
 qgisMinimumVersion=3.0
 description=A map library which makes it easy to add much used maps to your project.
-version=1.1
+version=1.2
 author=Marco Duiker - MD-kwadraat
 email=md@md-kwadraat.nl
 
@@ -23,6 +23,7 @@ changelog=  0.7 improved error handling, fixed encoding problem on remote qlr wi
             1.0 fixed bug, where metadata link was opened when return key was pressed.
             1.0 added the option to filter search results and navigate them with up/down keys.
             1.1 fixed bug, where some results were skipped when navigating filtered results.
+            1.2 added the possibility for messaging the user on selecting or adding a layer.
 
 # Tags are comma separated with spaces allowed
 tags=maps, layers, wms, wfs, ogr, library
