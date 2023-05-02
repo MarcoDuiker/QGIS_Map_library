@@ -5,3 +5,4 @@ __pycache__/*
 __pycache__
 *.gfs~
 libs/cache/*
+_deploy.ps1

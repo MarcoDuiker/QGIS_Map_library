@@ -21,7 +21,7 @@
         "Blue Marble": {
             "connection": "contextualWMSLegend=0&crs=EPSG:3857&dpiMode=7&featureCount=10&format=image/png&layers=nasa:bluemarble&styles&url=https://demo.boundlessgeo.com/geoserver/ows",
             "provider": "wms", 
-            "description": "Nasa Blue Marble provided by Boundless",
+            "description": "Nasa Blue Marble provided by Boundless fdsfdsa",
             "keywords": ["boundless"],
             "metadata_url": "https://visibleearth.nasa.gov/view_cat.php?categoryID=1484"
         }
@@ -34,7 +34,7 @@
         "OpenStreetMap": {
             "connection": "libs/example/osm_standard.qlr",
             "provider": "qlr", 
-            "description": "OpenStreetMap standard",
+            "description": "OpenStreetMap standard oli5",
             "keywords": [],
             "metadata_url": "https://www.openstreetmap.org/"
         },
@@ -96,6 +96,4 @@
         }
 
     }
-
-
 }

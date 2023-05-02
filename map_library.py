@@ -27,8 +27,11 @@ import re
 import json
 import pathlib
 import tempfile
+import traceback
+import time
 
 import qgis.PyQt.QtCore
+
 from qgis.PyQt.QtCore import QSettings, QTranslator, qVersion,\
                              QCoreApplication, QUrl
 from qgis.PyQt.QtGui import QIcon, QDesktopServices
@@ -48,6 +51,7 @@ from .map_library_settings_dialog import MapLibrarySettingsDialog
 from .network import networkaccessmanager
 
 import numpy as np
+from threading import Timer
 
 __author__ = 'Marco Duiker MD-kwadraat'
 __date__ = 'Februari 2019'
@@ -67,6 +71,7 @@ class MapLibrary:
         self.iface = iface
         self.settings = QgsSettings()
         self.plugin_dir = os.path.dirname(__file__)
+        self.timer = None
         # initialize locale
         locale = QgsSettings().value('locale/userLocale')[0:2]
         locale_path = os.path.join(
@@ -135,6 +140,7 @@ class MapLibrary:
         self.dlg.search_ldt.textChanged.connect(self.find_next_item)
         self.dlg.search_ldt.returnPressed.connect(self.on_return)
         self.dlg.close_btn.clicked.connect(self.close_dialog)
+        self.dlg.reload_btn.clicked.connect(self.reload_dialog)
         self.dlg.add_btn.clicked.connect(self.add_layer)
         self.dlg.metadata_btn.clicked.connect(self.show_metadata)
         
@@ -149,6 +155,9 @@ class MapLibrary:
         self.dlg.layout().insertWidget(0, self.dlg_msg_bar)
 
         self.found_items = []
+
+        libs_def_file = self.settings.value("MapLibrary/lib_path", None)
+        QgsMessageLog.logMessage(u'DEBUG: ok')
 
     # noinspection PyMethodMayBeStatic
     def tr(self, message):
@@ -244,6 +253,7 @@ class MapLibrary:
         """Create the menu entries and toolbar icons inside the QGIS GUI."""
 
         icon_path = ':/plugins/map_library/icon.png'
+
         self.add_action(
             icon_path,
             text=self.tr(u'Map Library'),
@@ -277,11 +287,21 @@ class MapLibrary:
                 action)
             self.iface.removeToolBarIcon(action)
         del self.toolbar
+
         
     def close_dialog(self):
         
+        self.layerTree.clear()
+        self.library_tree_filled = False
         self.dlg.close()
+
+
+    def reload_dialog(self):
         
+        self.layerTree.clear()
+        self.library_tree_filled = False
+        self.run()
+
         
     def find_next_item(self):
         '''
@@ -733,33 +753,51 @@ class MapLibrary:
         We do this only once on opening the dialog, so we keep plugin load time
         low.
         """
-        
+        QgsMessageLog.logMessage(u'DEBUG: ' + str(self.library_tree_filled))
         if not self.library_tree_filled:
             libs_def_file = self.settings.value("MapLibrary/lib_path", None)
             if not libs_def_file:
-                libs_def_file = os.path.join(self.plugin_dir, 'libs',
-                                             'libs.json')
+                libs_def_file = os.path.join(self.plugin_dir, 'libs', 'libs.json')
 
-            word_list = []
-            try:
-                json_tree = self.get_text_contents_from_path(libs_def_file)
-                libs = json.loads(json_tree)
-                for name, path in libs.items():
-                    word_list = word_list + self.add_lib_to_tree(name, path)
-                completer = QCompleter(set([x.lower() for x in word_list]))
-                completer.setCaseSensitivity(QtCore.Qt.CaseInsensitive)
-                self.dlg.search_ldt.setCompleter(completer)
-                self.library_tree_filled = True
-            except Exception as e:
-                self.iface.messageBar().pushMessage("Error",
-                    self.tr(u'Initializing Library failed. ') + 
-                    self.tr(u'See message log for more info.'), 
-                    level = Qgis.Critical)
-                QgsMessageLog.logMessage(u'Error Initializing Library ' + str(e), 
-                                          'Map Library')
+            self.filltree(libs_def_file)
+            #self.timer = Timer(10.0, self.timercallback(libs_def_file))
+            #self.timer.start()
+            #QgsMessageLog.logMessage(u'DEBUG: Timer started')
 
         self.dlg.show()
 
+    def timercallback(self,libs_def_file):
+        QgsMessageLog.logMessage(u'DEBUG: Timer elapsed')
+        self.layerTree.clear()
+        self.library_tree_filled = False
+        self.filltree(libs_def_file)
+
+    def filltree(self, libs_def_file):
+        word_list = []
+        QgsMessageLog.logMessage(u'DEBUG: Filling the tree')
+        try:
+            json_tree = self.get_text_contents_from_path(libs_def_file)
+            libs = json.loads(json_tree)
+            for name, path in libs.items():
+                if name == "LibrariesRefreshInterval":
+                    RefreshInterval = path
+                else:
+                    word_list = word_list + self.add_lib_to_tree(name, path)
+            completer = QCompleter(set([x.lower() for x in word_list]))
+            completer.setCaseSensitivity(QtCore.Qt.CaseInsensitive)
+            self.dlg.search_ldt.setCompleter(completer)
+            self.library_tree_filled = True
+            self.run()
+
+        except Exception as e:
+            tb = e.__traceback__
+            line_no = traceback.extract_tb(tb)[-1][1]
+            self.iface.messageBar().pushMessage("Error",
+                self.tr(u'Initializing Library failed. ') + 
+                self.tr(u'See message log for more info.'), 
+                level = Qgis.Critical)
+            QgsMessageLog.logMessage(u'Error Initializing Library ' + str(e)  + str(line_no), 
+                                        'Map Library')
 
     def choose_file(self):
         '''

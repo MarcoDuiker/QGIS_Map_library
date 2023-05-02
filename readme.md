@@ -8,7 +8,7 @@ Layers can be just about any type QGIS supports, including group layers. Layers 
 
 Of course, entries in the library can have a meta data url associated, so the end user can find meta data for layers and sections in the library.
 
-You will find the plug-in in the Vector menu. That's also the place where you can define the library the plug-in uses.
+You will find the plug-in in the Web menu. That's also the place where you can define the library the plug-in uses.
 
 More info in the [help](https://marcoduiker.github.io/QGIS_Map_library/help/build/html/index.html). 
 
