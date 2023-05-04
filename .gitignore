@@ -6,3 +6,5 @@ __pycache__
 *.gfs~
 libs/cache/*
 _deploy.ps1
+_deploy.ps1
+_deploy.ps1

@@ -14,6 +14,19 @@ More info in the [help](https://marcoduiker.github.io/QGIS_Map_library/help/buil
 
 ## Version history
 
+###  1.3
+
+Contains the opportunity to auto reload the libraries. Therefore, the following tag ("LibrariesRefreshInterval") needs to be added in libs.json:
+
+```
+{
+    "Example": "libs/example/example.json",
+    "LibrariesRefreshInterval": 60
+}
+```
+The value has to be defined in minutes.
+This feature is sponsored by [GIS of Canton of Schaffhausen, Switzerland](https://sh.ch/CMS/Webseite/Kanton-Schaffhausen/Beh-rde/Verwaltung/Volkswirtschaftsdepartement/Amt-f-r-Geoinformation-3854-DE.html). 
+
 ###  1.2
 
 This version adds the possibility to message the user via message bars. Such a message is shown upon selection of a library item, and/ or when adding a library item to the map.

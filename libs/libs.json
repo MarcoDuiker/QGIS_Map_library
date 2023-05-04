@@ -1,4 +1,3 @@
 {
-    "Example": "libs/example/example.json",
-    "LibrariesRefreshInterval": 60
+    "Example": "libs/example/example.json"
 }
