@@ -8,11 +8,24 @@ Layers can be just about any type QGIS supports, including group layers. Layers 
 
 Of course, entries in the library can have a meta data url associated, so the end user can find meta data for layers and sections in the library.
 
-You will find the plug-in in the Vector menu. That's also the place where you can define the library the plug-in uses.
+You will find the plug-in in the Web menu. That's also the place where you can define the library the plug-in uses.
 
 More info in the [help](https://marcoduiker.github.io/QGIS_Map_library/help/build/html/index.html). 
 
 ## Version history
+
+###  x.x
+
+Contains the opportunity to auto reload the libraries. Therefore, the following tag ("LibrariesRefreshInterval") needs to be added in libs.json:
+
+```
+{
+    "Example": "libs/example/example.json",
+    "LibrariesRefreshInterval": 60
+}
+```
+The value has to be defined in minutes.
+This feature is sponsored by [GIS of Canton of Schaffhausen, Switzerland](https://sh.ch/CMS/Webseite/Kanton-Schaffhausen/Beh-rde/Verwaltung/Volkswirtschaftsdepartement/Amt-f-r-Geoinformation-3854-DE.html). 
 
 ###  1.2
 
