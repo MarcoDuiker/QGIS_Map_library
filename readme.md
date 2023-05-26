@@ -14,7 +14,7 @@ More info in the [help](https://marcoduiker.github.io/QGIS_Map_library/help/buil
 
 ## Version history
 
-###  1.3
+###  x.x
 
 Contains the opportunity to auto reload the libraries. Therefore, the following tag ("LibrariesRefreshInterval") needs to be added in libs.json:
 
