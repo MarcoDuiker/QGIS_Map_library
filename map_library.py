@@ -136,7 +136,6 @@ class MapLibrary:
         self.dlg.search_ldt.textChanged.connect(self.find_next_item)
         self.dlg.search_ldt.returnPressed.connect(self.on_return)
         self.dlg.close_btn.clicked.connect(self.close_dialog)
-        self.dlg.reload_btn.clicked.connect(self.reload_dialog)
         self.dlg.add_btn.clicked.connect(self.add_layer)
         self.dlg.metadata_btn.clicked.connect(self.show_metadata)
         
@@ -153,7 +152,7 @@ class MapLibrary:
         refresh_interval = self.read_refresh_interval(os.path.join(self.plugin_dir, 'libs', 'libs.json'))
         if refresh_interval is not None:
             self.timer = QTimer()
-            self.timer.timeout.connect(self.reload_dialog)
+            self.timer.timeout.connect(self.reload_library)
             self.timer.start(refresh_interval * 60000)
 
         self.found_items = []
@@ -273,7 +272,7 @@ class MapLibrary:
             add_to_toolbar=False,
             status_tip=self.tr(u'Map Library settings'),
             parent=self.iface.mainWindow())
-            
+                   
         icon_path = ':/plugins/map_library/help.png'
         self.add_action(
             icon_path,
@@ -300,9 +299,9 @@ class MapLibrary:
         self.dlg.close()
         self.dlgclosed = True # set a flag to know, that the dialog is closed (and needs to be refilled when reopen it)
 
-    def reload_dialog(self):
+    def reload_library(self):
         
-        if self.dlg.isVisible(): # reload dialog automatically only if it's visible
+        if self.dlg.isVisible():
             self.layerTree.clear()
             self.library_tree_filled = False
             self.run()
@@ -755,7 +754,8 @@ class MapLibrary:
         We do this only once on opening the dialog, so we keep plugin load time
         low.
         """   
-        if not self.library_tree_filled or self.dlgclosed:
+        self.layerTree.clear()
+        if not self.library_tree_filled or self.dlgclosed or not self.dlg.isVisible():
             libs_def_file = self.settings.value("MapLibrary/lib_path", None)
             if not libs_def_file:
                 libs_def_file = os.path.join(self.plugin_dir, 'libs', 'libs.json')
