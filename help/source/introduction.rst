@@ -66,6 +66,21 @@ The Map Library contents file may be specified by:
   - a relative path on the file system (relative to the Map Library plugin folder) 
   - an URL starting with ``http://`` or ``https://``
 
+Automatic Reloading
+'''''''''''''''''''
+
+It is possible to have the map libraries reloaded automatically by adding a ``LibrariesRefreshInterval`` entry like:
+
+::
+
+    {
+        "Example":          "libs/example/example.json",
+        "Another Example":  "libs/example/example2.json",
+        "LibrariesRefreshInterval": 60
+    } 
+
+The interval must be specified in minutes.
+
 
 Map Library contents file
 -------------------------

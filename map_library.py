@@ -30,7 +30,7 @@ import tempfile
 
 import qgis.PyQt.QtCore
 from qgis.PyQt.QtCore import QSettings, QTranslator, qVersion,\
-                             QCoreApplication, QUrl
+                             QCoreApplication, QUrl, QTimer
 from qgis.PyQt.QtGui import QIcon, QDesktopServices
 from qgis.PyQt.QtWidgets import QAction, QApplication, QTreeWidget, \
                             QTreeWidgetItem, QMessageBox, QDialogButtonBox, \
@@ -67,6 +67,7 @@ class MapLibrary:
         self.iface = iface
         self.settings = QgsSettings()
         self.plugin_dir = os.path.dirname(__file__)
+
         # initialize locale
         locale = QgsSettings().value('locale/userLocale')[0:2]
         locale_path = os.path.join(
@@ -148,7 +149,20 @@ class MapLibrary:
         self.dlg_msg_bar = QgsMessageBar()
         self.dlg.layout().insertWidget(0, self.dlg_msg_bar)
 
+        refresh_interval = self.read_refresh_interval(os.path.join(self.plugin_dir, 'libs', 'libs.json'))
+        if refresh_interval is not None:
+            self.timer = QTimer()
+            self.timer.timeout.connect(self.reload_library)
+            self.timer.start(refresh_interval * 60000)
+
         self.found_items = []
+        self.dlgclosed = False
+
+    def read_refresh_interval(self, filename):
+        with open(filename, 'r') as f:
+            data = json.load(f)
+            refresh_interval = data.get('LibrariesRefreshInterval')
+            return refresh_interval
 
     # noinspection PyMethodMayBeStatic
     def tr(self, message):
@@ -258,7 +272,16 @@ class MapLibrary:
             add_to_toolbar=False,
             status_tip=self.tr(u'Map Library settings'),
             parent=self.iface.mainWindow())
-            
+
+        icon_path = ':/plugins/map_library/refresh.png'
+        self.add_action(
+            icon_path,
+            text=self.tr(u'Reload'),
+            callback=self.reload_library,
+            add_to_toolbar=False,
+            status_tip=self.tr(u'Reload map libraries'),
+            parent=self.iface.mainWindow())
+                   
         icon_path = ':/plugins/map_library/help.png'
         self.add_action(
             icon_path,
@@ -267,8 +290,7 @@ class MapLibrary:
             add_to_toolbar=False,
             status_tip=self.tr(u'Show help'),
             parent=self.iface.mainWindow())
-
-
+            
     def unload(self):
         """Removes the plugin menu item and icon from QGIS GUI."""
         for action in self.actions:
@@ -277,12 +299,22 @@ class MapLibrary:
                 action)
             self.iface.removeToolBarIcon(action)
         del self.toolbar
+        if self.timer: self.timer.stop()
         
     def close_dialog(self):
         
+        self.layerTree.clear()
+        self.library_tree_filled = False
         self.dlg.close()
+        self.dlgclosed = True # set a flag to know, that the dialog is closed (and needs to be refilled when reopen it)
+
+    def reload_library(self):
         
-        
+        if self.dlg.isVisible():
+            self.layerTree.clear()
+            self.library_tree_filled = False
+            self.run()
+       
     def find_next_item(self):
         '''
         Finds search string in tree view
@@ -429,8 +461,7 @@ class MapLibrary:
                     self.tr(u'failed. ') +
                     self.tr(u'See message log for more info.'), 
                     level = Qgis.Critical)
-                QgsMessageLog.logMessage(u'Error reading file ' + str(e), 
-                                         'Map Library')    
+                QgsMessageLog.logMessage(u'Error reading file ' + str(e), 'Map Library')    
             finally:
                 QApplication.restoreOverrideCursor()
         else:
@@ -447,8 +478,7 @@ class MapLibrary:
                     self.tr(u'failed. ') +
                     self.tr(u'See message log for more info.'), 
                     level = Qgis.Critical)
-                QgsMessageLog.logMessage(u'Error reading file ' + str(e), 
-                                          'Map Library')
+                QgsMessageLog.logMessage(u'Error reading file ' + str(e), 'Map Library')
         return txt
         
     def show_metadata(self):
@@ -732,20 +762,20 @@ class MapLibrary:
         
         We do this only once on opening the dialog, so we keep plugin load time
         low.
-        """
-        
-        if not self.library_tree_filled:
+        """   
+        self.layerTree.clear()
+        if not self.library_tree_filled or self.dlgclosed or not self.dlg.isVisible():
             libs_def_file = self.settings.value("MapLibrary/lib_path", None)
             if not libs_def_file:
-                libs_def_file = os.path.join(self.plugin_dir, 'libs',
-                                             'libs.json')
+                libs_def_file = os.path.join(self.plugin_dir, 'libs', 'libs.json')
 
             word_list = []
             try:
                 json_tree = self.get_text_contents_from_path(libs_def_file)
                 libs = json.loads(json_tree)
                 for name, path in libs.items():
-                    word_list = word_list + self.add_lib_to_tree(name, path)
+                    if not name == "LibrariesRefreshInterval":
+                        word_list = word_list + self.add_lib_to_tree(name, path)
                 completer = QCompleter(set([x.lower() for x in word_list]))
                 completer.setCaseSensitivity(QtCore.Qt.CaseInsensitive)
                 self.dlg.search_ldt.setCompleter(completer)
@@ -756,9 +786,9 @@ class MapLibrary:
                     self.tr(u'See message log for more info.'), 
                     level = Qgis.Critical)
                 QgsMessageLog.logMessage(u'Error Initializing Library ' + str(e), 
-                                          'Map Library')
-
-        self.dlg.show()
+                                        'Map Library')
+                        
+            self.dlg.show()
 
 
     def choose_file(self):
