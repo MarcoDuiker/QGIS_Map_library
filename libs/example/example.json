@@ -52,7 +52,8 @@
             "provider": "qlr", 
             "description": "Google maps",
             "keywords": ["Satellite"],
-            "metadata_url": "https://wikipedia.org/wiki/Google_Maps"
+            "metadata_url": "https://wikipedia.org/wiki/Google_Maps",
+            "on_load_message": "Just an example load message"
         },
 
         "Google Roads": {
@@ -60,7 +61,12 @@
             "provider": "qlr", 
             "description": "Google roads",
             "keywords": [],
-            "metadata_url": "https://wikipedia.org/wiki/Google_Maps"
+            "metadata_url": "https://wikipedia.org/wiki/Google_Maps",
+            "on_select_message": {
+                  "msg": "Just an example critical select message",
+                  "level": "Critical",
+                  "duration": 5
+            }
         },
 
         "Google Terrain": {
@@ -90,6 +96,4 @@
         }
 
     }
-
-
 }

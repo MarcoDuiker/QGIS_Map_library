@@ -26,7 +26,7 @@ Then the Map Library can be browsed or searched via the search bar.
 
 Once an interesting layer is found, metadata can be accessed via the `Metadata` button. A layer can be added to the project by double clicking the item, or by pressing the `Add` button.
 
-Via the settings of the plugin (accesible via the Map Library menu in the Web menu of QGIS), the library can be selected.
+Via the settings of the plugin (accesible via the Map Library menu in the Web menu of QGIS), the library can be selected. Optionaly the default alphabetical sorting of the map library can be turned off.
 
 
 Managing Libraries
@@ -66,6 +66,21 @@ The Map Library contents file may be specified by:
   - a relative path on the file system (relative to the Map Library plugin folder) 
   - an URL starting with ``http://`` or ``https://``
 
+Automatic Reloading
+'''''''''''''''''''
+
+It is possible to have the map libraries reloaded automatically by adding a ``LibrariesRefreshInterval`` entry like:
+
+::
+
+    {
+        "Example":          "libs/example/example.json",
+        "Another Example":  "libs/example/example2.json",
+        "LibrariesRefreshInterval": 60
+    } 
+
+The interval must be specified in minutes.
+
 
 Map Library contents file
 -------------------------
@@ -91,6 +106,7 @@ An example of a small piece of a Map Library Contents file is:
             "provider": "wms", 
             "description": "Nasa Blue Marble provided by Boundless",
             "keywords": ["boundless"],
+            "on_load_message": "Please enjoy this beautiful image",
             "metadata_url": "https://visibleearth.nasa.gov/view_cat.php?categoryID=1484"
         }
     },
@@ -132,13 +148,43 @@ A layer is an item without children which has at least the following properties:
     - ``provider``
        - this tells QGIS how to interpret the path to add the layer to the project.
 
-Optionally a layer can have the following properties
+Optionally a layer can have the following properties:
     - ``description``
        - this is the description shown to the user
     - ``keywords``
        - these keywords get indexed so they aid searching. Don't duplicate words from the ``description`` as those words get indexed anyhow.
     - ``metadata_url``
        - an URL to a page containing metadata for the layer  
+    - ``on_load_message``
+       - a message to show the user when the layer gets loaded. This message is shown in the message bar
+    - ``on_select_message``
+       - a message to show the user when the user selects the layer in the library. This message is shown in a message bar in the library dialog.
+
+Both the ``on_load_message`` and the ``on_select_message`` can be a simple string. In that case the message is shown as an "Info" message on a blue background and should be clicked away by the user.
+
+Both the ``on_load_message`` and the ``on_select_message`` can be a dictionary like this:
+
+.. code-block:: none
+
+    "on_select_message": {
+          "msg": "Just an example critical select message",
+          "level": "Critical",
+          "duration": 5
+    }
+
+
+These properties mean:
+    - ``msg``
+       - (required) The message shown to the user. 
+    - ``level``
+       - (optional, defaults to ``Info``) The message level as in this table:
+           - ``Info``:      background color will be blue
+           - ``Warning``:   background color will be orange
+           - ``Critical``:  background color will be red
+           - ``Succes``:    background color will be green
+    - ``duration``
+       - (optional, defaults to 0) The duration in seconds the message will be shown. When zero, this will be indefinitely.
+
 
 
 Defining VALID layers
@@ -157,6 +203,8 @@ A valid layer has to have a ``provider`` property which is supported. The follow
       - ``gdal``
       - ``wcs``
       - ``wms``
+   - Any layer type via qlr file
+      - ``qlr``
 
 All these require a ``connection`` which QGIS uses to add the layer. Creating a valid ``connection`` is a bit of a black art for these layer types. Adding the layer to be defined to QGIS first and then looking at the source properties helps, as well as `this page <https://docs.qgis.org/testing/en/docs/pyqgis_developer_cookbook/loadlayer.html>`_ in the pyQGIS cookbook.
 

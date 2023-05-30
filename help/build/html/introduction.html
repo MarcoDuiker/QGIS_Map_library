@@ -5,13 +5,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Introduction &#8212; Map Library 0.5 documentation</title>
+    <title>Introduction &#8212; Map Library 1.3 documentation</title>
     <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.5',
+        VERSION:     '1.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -35,7 +35,7 @@
         <li class="right" >
           <a href="index.html" title="Welcome to the Map Library plugin documentation"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">Map Library 0.5 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">Map Library 1.3 documentation</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -60,7 +60,7 @@
 <p>Using the plugin is as simple as clicking the icon to open the Map Library dialog.</p>
 <p>Then the Map Library can be browsed or searched via the search bar.</p>
 <p>Once an interesting layer is found, metadata can be accessed via the <cite>Metadata</cite> button. A layer can be added to the project by double clicking the item, or by pressing the <cite>Add</cite> button.</p>
-<p>Via the settings of the plugin (accesible via the Map Library menu in the Web menu of QGIS), the library can be selected.</p>
+<p>Via the settings of the plugin (accesible via the Map Library menu in the Web menu of QGIS), the library can be selected. Optionaly the default alphabetical sorting of the map library can be turned off.</p>
 </div>
 <div class="section" id="managing-libraries">
 <h2>Managing Libraries<a class="headerlink" href="#managing-libraries" title="Permalink to this headline">¶</a></h2>
@@ -91,6 +91,18 @@
 <li>an URL starting with <code class="docutils literal"><span class="pre">http://</span></code> or <code class="docutils literal"><span class="pre">https://</span></code></li>
 </ul>
 </div></blockquote>
+<div class="section" id="automatic-reloading">
+<h4>Automatic Reloading<a class="headerlink" href="#automatic-reloading" title="Permalink to this headline">¶</a></h4>
+<p>It is possible to have the map libraries reloaded automatically by adding a <code class="docutils literal"><span class="pre">LibrariesRefreshInterval</span></code> entry like:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;Example&quot;</span><span class="p">:</span>          <span class="s2">&quot;libs/example/example.json&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Another Example&quot;</span><span class="p">:</span>  <span class="s2">&quot;libs/example/example2.json&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;LibrariesRefreshInterval&quot;</span><span class="p">:</span> <span class="mi">60</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The interval must be specified in minutes.</p>
+</div>
 </div>
 <div class="section" id="map-library-contents-file">
 <h3>Map Library contents file<a class="headerlink" href="#map-library-contents-file" title="Permalink to this headline">¶</a></h3>
@@ -111,6 +123,7 @@
         <span class="s2">&quot;provider&quot;</span><span class="p">:</span> <span class="s2">&quot;wms&quot;</span><span class="p">,</span>
         <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Nasa Blue Marble provided by Boundless&quot;</span><span class="p">,</span>
         <span class="s2">&quot;keywords&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;boundless&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;on_load_message&quot;</span><span class="p">:</span> <span class="s2">&quot;Please enjoy this beautiful image&quot;</span><span class="p">,</span>
         <span class="s2">&quot;metadata_url&quot;</span><span class="p">:</span> <span class="s2">&quot;https://visibleearth.nasa.gov/view_cat.php?categoryID=1484&quot;</span>
     <span class="p">}</span>
 <span class="p">},</span>
@@ -188,7 +201,7 @@
 </li>
 </ul>
 </dd>
-<dt>Optionally a layer can have the following properties</dt>
+<dt>Optionally a layer can have the following properties:</dt>
 <dd><ul class="first last simple">
 <li><dl class="first docutils">
 <dt><code class="docutils literal"><span class="pre">description</span></code></dt>
@@ -210,6 +223,71 @@
 <dt><code class="docutils literal"><span class="pre">metadata_url</span></code></dt>
 <dd><ul class="first last">
 <li>an URL to a page containing metadata for the layer</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">on_load_message</span></code></dt>
+<dd><ul class="first last">
+<li>a message to show the user when the layer gets loaded. This message is shown in the message bar</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">on_select_message</span></code></dt>
+<dd><ul class="first last">
+<li>a message to show the user when the user selects the layer in the library. This message is shown in a message bar in the library dialog.</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+<p>Both the <code class="docutils literal"><span class="pre">on_load_message</span></code> and the <code class="docutils literal"><span class="pre">on_select_message</span></code> can be a simple string. In that case the message is shown as an “Info” message on a blue background and should be clicked away by the user.</p>
+<p>Both the <code class="docutils literal"><span class="pre">on_load_message</span></code> and the <code class="docutils literal"><span class="pre">on_select_message</span></code> can be a dictionary like this:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>&quot;on_select_message&quot;: {
+      &quot;msg&quot;: &quot;Just an example critical select message&quot;,
+      &quot;level&quot;: &quot;Critical&quot;,
+      &quot;duration&quot;: 5
+}
+</pre></div>
+</div>
+<dl class="docutils">
+<dt>These properties mean:</dt>
+<dd><ul class="first last simple">
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">msg</span></code></dt>
+<dd><ul class="first last">
+<li>(required) The message shown to the user.</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">level</span></code></dt>
+<dd><ul class="first last">
+<li><dl class="first docutils">
+<dt>(optional, defaults to <code class="docutils literal"><span class="pre">Info</span></code>) The message level as in this table:</dt>
+<dd><ul class="first last">
+<li><code class="docutils literal"><span class="pre">Info</span></code>:      background color will be blue</li>
+<li><code class="docutils literal"><span class="pre">Warning</span></code>:   background color will be orange</li>
+<li><code class="docutils literal"><span class="pre">Critical</span></code>:  background color will be red</li>
+<li><code class="docutils literal"><span class="pre">Succes</span></code>:    background color will be green</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">duration</span></code></dt>
+<dd><ul class="first last">
+<li>(optional, defaults to 0) The duration in seconds the message will be shown. When zero, this will be indefinitely.</li>
 </ul>
 </dd>
 </dl>
@@ -242,6 +320,14 @@
 <li><code class="docutils literal"><span class="pre">gdal</span></code></li>
 <li><code class="docutils literal"><span class="pre">wcs</span></code></li>
 <li><code class="docutils literal"><span class="pre">wms</span></code></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Any layer type via qlr file</dt>
+<dd><ul class="first last">
+<li><code class="docutils literal"><span class="pre">qlr</span></code></li>
 </ul>
 </dd>
 </dl>
@@ -309,7 +395,10 @@ To do this use a text editor to create <code class="docutils literal"><span clas
 <li><a class="reference internal" href="#about">About</a></li>
 <li><a class="reference internal" href="#using-the-plugin">Using the plugin</a></li>
 <li><a class="reference internal" href="#managing-libraries">Managing Libraries</a><ul>
-<li><a class="reference internal" href="#map-library-index-file">Map Library index file</a></li>
+<li><a class="reference internal" href="#map-library-index-file">Map Library index file</a><ul>
+<li><a class="reference internal" href="#automatic-reloading">Automatic Reloading</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#map-library-contents-file">Map Library contents file</a><ul>
 <li><a class="reference internal" href="#defining-sections">Defining Sections</a></li>
 <li><a class="reference internal" href="#defining-layers">Defining Layers</a></li>
@@ -356,7 +445,7 @@ To do this use a text editor to create <code class="docutils literal"><span clas
         <li class="right" >
           <a href="index.html" title="Welcome to the Map Library plugin documentation"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">Map Library 0.5 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">Map Library 1.3 documentation</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
