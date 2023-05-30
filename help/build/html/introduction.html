@@ -5,13 +5,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Introduction &#8212; Map Library 0.9 documentation</title>
+    <title>Introduction &#8212; Map Library 1.3 documentation</title>
     <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.9',
+        VERSION:     '1.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -35,7 +35,7 @@
         <li class="right" >
           <a href="index.html" title="Welcome to the Map Library plugin documentation"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">Map Library 0.9 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">Map Library 1.3 documentation</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -91,6 +91,18 @@
 <li>an URL starting with <code class="docutils literal"><span class="pre">http://</span></code> or <code class="docutils literal"><span class="pre">https://</span></code></li>
 </ul>
 </div></blockquote>
+<div class="section" id="automatic-reloading">
+<h4>Automatic Reloading<a class="headerlink" href="#automatic-reloading" title="Permalink to this headline">¶</a></h4>
+<p>It is possible to have the map libraries reloaded automatically by adding a <code class="docutils literal"><span class="pre">LibrariesRefreshInterval</span></code> entry like:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;Example&quot;</span><span class="p">:</span>          <span class="s2">&quot;libs/example/example.json&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Another Example&quot;</span><span class="p">:</span>  <span class="s2">&quot;libs/example/example2.json&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;LibrariesRefreshInterval&quot;</span><span class="p">:</span> <span class="mi">60</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The interval must be specified in minutes.</p>
+</div>
 </div>
 <div class="section" id="map-library-contents-file">
 <h3>Map Library contents file<a class="headerlink" href="#map-library-contents-file" title="Permalink to this headline">¶</a></h3>
@@ -383,7 +395,10 @@ To do this use a text editor to create <code class="docutils literal"><span clas
 <li><a class="reference internal" href="#about">About</a></li>
 <li><a class="reference internal" href="#using-the-plugin">Using the plugin</a></li>
 <li><a class="reference internal" href="#managing-libraries">Managing Libraries</a><ul>
-<li><a class="reference internal" href="#map-library-index-file">Map Library index file</a></li>
+<li><a class="reference internal" href="#map-library-index-file">Map Library index file</a><ul>
+<li><a class="reference internal" href="#automatic-reloading">Automatic Reloading</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#map-library-contents-file">Map Library contents file</a><ul>
 <li><a class="reference internal" href="#defining-sections">Defining Sections</a></li>
 <li><a class="reference internal" href="#defining-layers">Defining Layers</a></li>
@@ -430,7 +445,7 @@ To do this use a text editor to create <code class="docutils literal"><span clas
         <li class="right" >
           <a href="index.html" title="Welcome to the Map Library plugin documentation"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">Map Library 0.9 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">Map Library 1.3 documentation</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

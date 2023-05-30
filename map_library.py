@@ -272,6 +272,15 @@ class MapLibrary:
             add_to_toolbar=False,
             status_tip=self.tr(u'Map Library settings'),
             parent=self.iface.mainWindow())
+
+        icon_path = ':/plugins/map_library/refresh.png'
+        self.add_action(
+            icon_path,
+            text=self.tr(u'Reload'),
+            callback=self.reload_library,
+            add_to_toolbar=False,
+            status_tip=self.tr(u'Reload map libraries'),
+            parent=self.iface.mainWindow())
                    
         icon_path = ':/plugins/map_library/help.png'
         self.add_action(
