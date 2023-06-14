@@ -305,6 +305,7 @@ class MapLibrary:
         
         self.layerTree.clear()
         self.library_tree_filled = False
+        self.found_items = []
         self.dlg.close()
         self.dlgclosed = True # set a flag to know, that the dialog is closed (and needs to be refilled when reopen it)
 
@@ -313,6 +314,7 @@ class MapLibrary:
         if self.dlg.isVisible():
             self.layerTree.clear()
             self.library_tree_filled = False
+            self.found_items = []
             self.run()
        
     def find_next_item(self):
@@ -337,11 +339,11 @@ class MapLibrary:
         if len(searchString) < 3:
             for item in self.tree_items:
                 item.setHidden(False)
-                self.layerTree.collapseItem(item)                
+                self.layerTree.collapseItem(item)
             return
 
         # Get search results
-        if not self.last_search_string == searchString: 
+        if not self.last_search_string == searchString or not self.found_items: 
             self.last_search_string = searchString
             self.search_index = 0
             self.found_items = []
