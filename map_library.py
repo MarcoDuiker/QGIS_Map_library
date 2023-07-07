@@ -83,7 +83,7 @@ class MapLibrary:
                 QCoreApplication.installTranslator(self.translator)
 
         # Create the dialog (after translation) and keep reference
-        self.dlg = MapLibraryDialog()
+        self.dlg = MapLibraryDialog(self)
         self.settings_dlg = MapLibrarySettingsDialog()
 
         self.actions = []
@@ -302,7 +302,7 @@ class MapLibrary:
         if self.timer: self.timer.stop()
         
     def close_dialog(self):
-        
+        self.dlg.search_ldt.clear()
         self.layerTree.clear()
         self.library_tree_filled = False
         self.found_items = []
