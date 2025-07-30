@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="2.0">
+<!DOCTYPE TS>
+<TS version="2.1">
 <context>
     <name>MapLibrary</name>
     <message>
-        <location filename="../map_library.py" line="297"/>
+        <location filename="../map_library.py" line="300"/>
         <source>&amp;Map Library</source>
         <translation>&amp;Kaarten Bibliotheek</translation>
     </message>
     <message>
-        <location filename="../map_library.py" line="261"/>
+        <location filename="../map_library.py" line="264"/>
         <source>Map Library</source>
         <translation>Kaarten Bibliotheek</translation>
     </message>
     <message>
-        <location filename="../map_library.py" line="476"/>
+        <location filename="../map_library.py" line="481"/>
         <source>Reading file </source>
         <translation>Bestand lezen</translation>
     </message>
@@ -28,7 +29,7 @@
         <translation type="obsolete">Kaartlaag toevoegen mislukt</translation>
     </message>
     <message>
-        <location filename="../map_library.py" line="784"/>
+        <location filename="../map_library.py" line="814"/>
         <source>See message log for more info.</source>
         <translation>Meer informatie op het paneel logboekmeldingen.</translation>
     </message>
@@ -43,52 +44,52 @@
         <translation type="obsolete">mislukt.</translation>
     </message>
     <message>
-        <location filename="../map_library.py" line="476"/>
+        <location filename="../map_library.py" line="481"/>
         <source>failed. </source>
         <translation>mislukt. </translation>
     </message>
     <message>
-        <location filename="../map_library.py" line="597"/>
+        <location filename="../map_library.py" line="612"/>
         <source>Loading layer failed. </source>
         <translation>Kaartlaag toevoegen mislukt. </translation>
     </message>
     <message>
-        <location filename="../map_library.py" line="784"/>
+        <location filename="../map_library.py" line="814"/>
         <source>Initializing Library failed. </source>
         <translation>Bibliotheek inlezen mislukt. </translation>
     </message>
     <message>
-        <location filename="../map_library.py" line="268"/>
+        <location filename="../map_library.py" line="271"/>
         <source>Settings</source>
         <translation>Instellingen</translation>
     </message>
     <message>
-        <location filename="../map_library.py" line="268"/>
+        <location filename="../map_library.py" line="271"/>
         <source>Map Library settings</source>
         <translation>Kaarten Bibliotheek instellingen</translation>
     </message>
     <message>
-        <location filename="../map_library.py" line="286"/>
+        <location filename="../map_library.py" line="289"/>
         <source>Help</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../map_library.py" line="286"/>
+        <location filename="../map_library.py" line="289"/>
         <source>Show help</source>
         <translation>Toon help</translation>
     </message>
     <message>
-        <location filename="../map_library.py" line="799"/>
+        <location filename="../map_library.py" line="829"/>
         <source>Select Map Library:</source>
         <translation>Selecteer Kaarten Bibliotheek</translation>
     </message>
     <message>
-        <location filename="../map_library.py" line="549"/>
+        <location filename="../map_library.py" line="554"/>
         <source>Layer provider &quot;</source>
         <translation>Laag provider &quot;</translation>
     </message>
     <message>
-        <location filename="../map_library.py" line="549"/>
+        <location filename="../map_library.py" line="554"/>
         <source>&quot; not supported.</source>
         <translation>&quot; wordt niet ondersteund.</translation>
     </message>
@@ -103,14 +104,14 @@
         <translation type="obsolete">omschrijving</translation>
     </message>
     <message>
-        <location filename="../map_library.py" line="277"/>
+        <location filename="../map_library.py" line="280"/>
         <source>Reload</source>
-        <translation type="unfinished">Opnieuw laden</translation>
+        <translation>Opnieuw laden</translation>
     </message>
     <message>
-        <location filename="../map_library.py" line="277"/>
+        <location filename="../map_library.py" line="280"/>
         <source>Reload map libraries</source>
-        <translation type="unfinished">Opnieuw laden van de bibliotheek</translation>
+        <translation>Opnieuw laden van de bibliotheek</translation>
     </message>
 </context>
 <context>
@@ -199,6 +200,16 @@
         <location filename="../map_library_settings_dialog_base.ui" line="74"/>
         <source>Enable filtering by search term</source>
         <translation>Filter op zoekterm</translation>
+    </message>
+    <message>
+        <location filename="../map_library_settings_dialog_base.ui" line="81"/>
+        <source>If checked, layer loading position will default to top. Otherwise the default is bottom.</source>
+        <translation>Wanneer aangevinkt worden lagen standaard bovenaan toegevoegd, anders standaard onderaan.</translation>
+    </message>
+    <message>
+        <location filename="../map_library_settings_dialog_base.ui" line="84"/>
+        <source>Add layers as top layer</source>
+        <translation>Voeg lagen bovenaan toe</translation>
     </message>
 </context>
 </TS>

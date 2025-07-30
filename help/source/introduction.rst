@@ -28,6 +28,7 @@ Once an interesting layer is found, metadata can be accessed via the `Metadata` 
 
 Via the settings of the plugin (accesible via the Map Library menu in the Web menu of QGIS), the library can be selected. Optionaly the default alphabetical sorting of the map library can be turned off.
 
+Via the settings of the plugin (accesible via the Map Library menu in the Web menu of QGIS), the default position (top or bottom) where the layer will be added can be selected. 
 
 Managing Libraries
 ==================
@@ -159,7 +160,9 @@ Optionally a layer can have the following properties:
        - a message to show the user when the layer gets loaded. This message is shown in the message bar
     - ``on_select_message``
        - a message to show the user when the user selects the layer in the library. This message is shown in a message bar in the library dialog.
-
+    - ``insert_point``
+       - a value of ``top`` will insert a layer in the top of the layer tree. For layers based on .qlr files this will only work for QGIS versions above 3.30. 
+       
 Both the ``on_load_message`` and the ``on_select_message`` can be a simple string. In that case the message is shown as an "Info" message on a blue background and should be clicked away by the user.
 
 Both the ``on_load_message`` and the ``on_select_message`` can be a dictionary like this:
