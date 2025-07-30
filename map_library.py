@@ -29,17 +29,13 @@ import pathlib
 import tempfile
 
 import qgis.PyQt.QtCore
-from qgis.PyQt.QtCore import \
-        QSettings, QTranslator, qVersion,\
-        QCoreApplication, QUrl, QTimer
+from qgis.PyQt.QtCore import QSettings, QTranslator, qVersion,\
+                             QCoreApplication, QUrl, QTimer
 from qgis.PyQt.QtGui import QIcon, QDesktopServices
-from qgis.PyQt.QtWidgets import \
-        QAction, QApplication, QTreeWidget, \
-        QTreeWidgetItem, QMessageBox, QDialogButtonBox, \
-        QCompleter, QFileDialog, QTreeWidgetItemIterator
-from qgis.core import \
-        Qgis, QgsMessageLog, QgsProject, QgsLayerDefinition, QgsSettings, \
-        QgsLayerTreeLayer
+from qgis.PyQt.QtWidgets import QAction, QApplication, QTreeWidget, \
+                            QTreeWidgetItem, QMessageBox, QDialogButtonBox, \
+                            QCompleter, QFileDialog, QTreeWidgetItemIterator
+from qgis.core import Qgis, QgsMessageLog, QgsProject, QgsLayerDefinition, QgsSettings
 from qgis.gui import QgsMessageBar
 
 # Initialize Qt resources from file resources.py
@@ -497,17 +493,6 @@ class MapLibrary:
         
         QDesktopServices().openUrl(QUrl(layer_props['metadata_url']))
         
-    def move_to_top(self, layers):
-        """
-        Moves the bottom layer(s) to the top
-        """
-        
-        root = QgsProject.instance().layerTreeRoot()
-        order = root.customLayerOrder()
-        for layer in layers: # How many layers we need to move
-            order.insert( 0, order.pop() ) # Last layer to first position
-        root.setCustomLayerOrder( order )
-        
 
     def add_layer_by_connection(self, layer_props):
         '''
@@ -574,17 +559,7 @@ class MapLibrary:
             self.iface.messageBar().pushMessage("Error",
                 self.tr(u'Loading layer failed. '), 
                 level = Qgis.Critical)
-        else:
-            insert_order_top = self.valueToBool(self.settings.value(
-                                "MapLibrary/insert_order_top", False))
-            if 'insert_point' in  layer_props:
-                if layer_props['insert_point'].lower() == 'top':
-                    insert_order_top = True
-                else:
-                    insert_order_top = False
-            if insert_order_top:
-                pass
-                #self.move_to_top([layer])
+                
 
     def add_layer_by_qlr(self, layer_props):
         '''
@@ -629,26 +604,11 @@ class MapLibrary:
                                           'Map Library')
                 return
         if path:
-            insert_order_top = self.valueToBool(self.settings.value(
-                                "MapLibrary/insert_order_top", False))
-            if 'insert_point' in  layer_props:
-                if layer_props['insert_point'].lower() == 'top':
-                    insert_order_top = True
-                else:
-                    insert_order_top = False
+            QgsLayerDefinition.loadLayerDefinition(
+                    path, 
+                    self.project, 
+                    self.project.layerTreeRoot())
                 
-                    
-            if insert_order_top and int(Qgis.QGIS_VERSION.split('.')[1]) > 38:
-                QgsLayerDefinition.loadLayerDefinition(
-                    path = path, 
-                    project = self.project, 
-                    rootGroup = self.project.layerTreeRoot(),
-                    insertMethod = Qgis.LayerTreeInsertionMethod.TopOfTree)
-            else:
-                QgsLayerDefinition.loadLayerDefinition(
-                    path = path, 
-                    project = self.project, 
-                    rootGroup = self.project.layerTreeRoot())
 
     def add_layer(self, item = None, column = None):
         '''
@@ -860,8 +820,6 @@ class MapLibrary:
             "MapLibrary/sort", True)))
         self.settings_dlg.filter_cbx.setChecked(self.valueToBool(self.settings.value(
             "MapLibrary/filter", False)))
-        self.settings_dlg.insert_order_top_cbx.setChecked(self.valueToBool(self.settings.value(
-            "MapLibrary/insert_order_top", False)))
         self.settings_dlg.lib_path_ldt.setText(self.settings.value(
             "MapLibrary/lib_path", ""))
         if self.settings_dlg.lib_path_ldt.text() == "":
@@ -884,8 +842,6 @@ class MapLibrary:
                                    self.settings_dlg.sort_cbx.isChecked())
             self.settings.setValue("MapLibrary/filter", 
                                    self.settings_dlg.filter_cbx.isChecked())
-            self.settings.setValue("MapLibrary/insert_order_top", 
-                                   self.settings_dlg.insert_order_top_cbx.isChecked())
 
     @staticmethod
     def valueToBool(value):

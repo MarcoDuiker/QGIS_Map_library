@@ -1,22 +1,31 @@
-<!DOCTYPE html>
 
-<html lang="en" data-content_root="./">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
-
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Introduction &#8212; Map Library 1.3 documentation</title>
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
-    <link rel="stylesheet" type="text/css" href="_static/classic.css?v=514cf933" />
-    
-    <script src="_static/documentation_options.js?v=c55cb9cb"></script>
-    <script src="_static/doctools.js?v=888ff710"></script>
-    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
-    
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="prev" title="Welcome to the Map Library plugin documentation" href="index.html" /> 
-  </head><body>
+  </head>
+  <body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
@@ -26,8 +35,7 @@
         <li class="right" >
           <a href="index.html" title="Welcome to the Map Library plugin documentation"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">Map Library 1.3 documentation</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">Introduction</a></li> 
+        <li class="nav-item nav-item-0"><a href="index.html">Map Library 1.3 documentation</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -36,41 +44,40 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <section id="introduction">
-<h1>Introduction<a class="headerlink" href="#introduction" title="Link to this heading">¶</a></h1>
-<section id="about">
-<h2>About<a class="headerlink" href="#about" title="Link to this heading">¶</a></h2>
+  <div class="section" id="introduction">
+<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="about">
+<h2>About<a class="headerlink" href="#about" title="Permalink to this headline">¶</a></h2>
 <p>This plug-in is developed by Marco Duiker from <a class="reference external" href="http://www.md-kwadraat.nl/">MD-kwadraat</a> .</p>
 <p>The plugin is inserted in the Web Menu of QGIS. Furthermore, an icon is added to the toolbars.</p>
 <p>This plug-in is meant for organizations or organizational units (that can be you !) as a means to provide one or more libraries of (often used) maps (layers) to the end user.</p>
 <p>Both libraries and maps can be available local on the file system or remotely on a server accessible via http(s).</p>
 <p>Layers can be just about any type QGIS supports, including group layers. Layers can be defined from a “connection string” defining the connection to the data, or from a QGIS layer file (.qlr) containing the connection to the data as well as styling and other properties.</p>
 <p>Of course, entries in the library can have a metadata url associated, so the end user can find metadata for layers and sections in the library.</p>
-</section>
-<section id="using-the-plugin">
-<h2>Using the plugin<a class="headerlink" href="#using-the-plugin" title="Link to this heading">¶</a></h2>
+</div>
+<div class="section" id="using-the-plugin">
+<h2>Using the plugin<a class="headerlink" href="#using-the-plugin" title="Permalink to this headline">¶</a></h2>
 <p>Using the plugin is as simple as clicking the icon to open the Map Library dialog.</p>
 <p>Then the Map Library can be browsed or searched via the search bar.</p>
 <p>Once an interesting layer is found, metadata can be accessed via the <cite>Metadata</cite> button. A layer can be added to the project by double clicking the item, or by pressing the <cite>Add</cite> button.</p>
 <p>Via the settings of the plugin (accesible via the Map Library menu in the Web menu of QGIS), the library can be selected. Optionaly the default alphabetical sorting of the map library can be turned off.</p>
-<p>Via the settings of the plugin (accesible via the Map Library menu in the Web menu of QGIS), the default position (top or bottom) where the layer will be added can be selected.</p>
-</section>
-<section id="managing-libraries">
-<h2>Managing Libraries<a class="headerlink" href="#managing-libraries" title="Link to this heading">¶</a></h2>
+</div>
+<div class="section" id="managing-libraries">
+<h2>Managing Libraries<a class="headerlink" href="#managing-libraries" title="Permalink to this headline">¶</a></h2>
 <p>Up till now there is no application for managing libraries. So a text editor is all you need (preferably one which shows errors in json files).</p>
-<section id="map-library-index-file">
-<h3>Map Library index file<a class="headerlink" href="#map-library-index-file" title="Link to this heading">¶</a></h3>
+<div class="section" id="map-library-index-file">
+<h3>Map Library index file<a class="headerlink" href="#map-library-index-file" title="Permalink to this headline">¶</a></h3>
 <p>In the Map Library settings the user chooses a Map Library index file in json format.</p>
-<p>By default this is the <code class="docutils literal notranslate"><span class="pre">libs\libs.json</span></code> file in the plugin folder.</p>
+<p>By default this is the <code class="docutils literal"><span class="pre">libs\libs.json</span></code> file in the plugin folder.</p>
 <p>This file should be a json file with contents like:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">{</span>
     <span class="s2">&quot;Example&quot;</span><span class="p">:</span> <span class="s2">&quot;libs/example/example.json&quot;</span>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>In this example only one top level entry <code class="docutils literal notranslate"><span class="pre">Example</span></code> is shown to the user. The contents from this entry is taken from the Map Library contents file <code class="docutils literal notranslate"><span class="pre">libs/example/example.json</span></code>.</p>
+<p>In this example only one top level entry <code class="docutils literal"><span class="pre">Example</span></code> is shown to the user. The contents from this entry is taken from the Map Library contents file <code class="docutils literal"><span class="pre">libs/example/example.json</span></code>.</p>
 <p>You can have as many top level entries as you like, by adding more entries separated by colons like:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">{</span>
     <span class="s2">&quot;Example&quot;</span><span class="p">:</span>          <span class="s2">&quot;libs/example/example.json&quot;</span><span class="p">,</span>
     <span class="s2">&quot;Another Example&quot;</span><span class="p">:</span>  <span class="s2">&quot;libs/example/example2.json&quot;</span>
 <span class="p">}</span>
@@ -79,15 +86,15 @@
 <p>The Map Library contents file may be specified by:</p>
 <blockquote>
 <div><ul class="simple">
-<li><p>an absolute path on the file system</p></li>
-<li><p>a relative path on the file system (relative to the Map Library plugin folder)</p></li>
-<li><p>an URL starting with <code class="docutils literal notranslate"><span class="pre">http://</span></code> or <code class="docutils literal notranslate"><span class="pre">https://</span></code></p></li>
+<li>an absolute path on the file system</li>
+<li>a relative path on the file system (relative to the Map Library plugin folder)</li>
+<li>an URL starting with <code class="docutils literal"><span class="pre">http://</span></code> or <code class="docutils literal"><span class="pre">https://</span></code></li>
 </ul>
 </div></blockquote>
-<section id="automatic-reloading">
-<h4>Automatic Reloading<a class="headerlink" href="#automatic-reloading" title="Link to this heading">¶</a></h4>
-<p>It is possible to have the map libraries reloaded automatically by adding a <code class="docutils literal notranslate"><span class="pre">LibrariesRefreshInterval</span></code> entry like:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<div class="section" id="automatic-reloading">
+<h4>Automatic Reloading<a class="headerlink" href="#automatic-reloading" title="Permalink to this headline">¶</a></h4>
+<p>It is possible to have the map libraries reloaded automatically by adding a <code class="docutils literal"><span class="pre">LibrariesRefreshInterval</span></code> entry like:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">{</span>
     <span class="s2">&quot;Example&quot;</span><span class="p">:</span>          <span class="s2">&quot;libs/example/example.json&quot;</span><span class="p">,</span>
     <span class="s2">&quot;Another Example&quot;</span><span class="p">:</span>  <span class="s2">&quot;libs/example/example2.json&quot;</span><span class="p">,</span>
     <span class="s2">&quot;LibrariesRefreshInterval&quot;</span><span class="p">:</span> <span class="mi">60</span>
@@ -95,13 +102,13 @@
 </pre></div>
 </div>
 <p>The interval must be specified in minutes.</p>
-</section>
-</section>
-<section id="map-library-contents-file">
-<h3>Map Library contents file<a class="headerlink" href="#map-library-contents-file" title="Link to this heading">¶</a></h3>
+</div>
+</div>
+<div class="section" id="map-library-contents-file">
+<h3>Map Library contents file<a class="headerlink" href="#map-library-contents-file" title="Permalink to this headline">¶</a></h3>
 <p>The Map Library contents file specifies the content of a top level entry in json format. It is a hierarchical structure with as many levels as you like. Don’t go overboard on this as people tend to find things better in wide than in deep structures.</p>
 <p>An example of a small piece of a Map Library Contents file is:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">{</span>
 <span class="s2">&quot;Aerial Photographs&quot;</span><span class="p">:</span> <span class="p">{</span>
     <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A nice description ...&quot;</span><span class="p">,</span>
     <span class="s2">&quot;Bing&quot;</span><span class="p">:</span> <span class="p">{</span>
@@ -132,99 +139,37 @@
 <span class="p">}</span>
 </pre></div>
 </div>
-<section id="defining-sections">
-<h4>Defining Sections<a class="headerlink" href="#defining-sections" title="Link to this heading">¶</a></h4>
-<dl class="simple">
-<dt>All items which have children and not the properties:</dt><dd><ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">connection</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">provider</span></code></p></li>
+<div class="section" id="defining-sections">
+<h4>Defining Sections<a class="headerlink" href="#defining-sections" title="Permalink to this headline">¶</a></h4>
+<dl class="docutils">
+<dt>All items which have children and not the properties:</dt>
+<dd><ul class="first last simple">
+<li><code class="docutils literal"><span class="pre">connection</span></code></li>
+<li><code class="docutils literal"><span class="pre">provider</span></code></li>
 </ul>
 </dd>
-<dt>are sections. A section can have other properties just like the layers (see below). The following properties are allowed:</dt><dd><ul class="simple">
-<li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">description</span></code></dt><dd><ul>
-<li><p>this is the description shown to the user</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">keywords</span></code></dt><dd><ul>
-<li><p>these keywords get indexed so they aid searching. Don’t duplicate words from the <code class="docutils literal notranslate"><span class="pre">description</span></code> as those words get indexed anyhow.</p></li>
+<dt>are sections. A section can have other properties just like the layers (see below). The following properties are allowed:</dt>
+<dd><ul class="first last simple">
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">description</span></code></dt>
+<dd><ul class="first last">
+<li>this is the description shown to the user</li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">metadata_url</span></code></dt><dd><ul>
-<li><p>an URL to a page containing metadata for the layer</p></li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">keywords</span></code></dt>
+<dd><ul class="first last">
+<li>these keywords get indexed so they aid searching. Don’t duplicate words from the <code class="docutils literal"><span class="pre">description</span></code> as those words get indexed anyhow.</li>
 </ul>
 </dd>
 </dl>
 </li>
-</ul>
-</dd>
-</dl>
-</section>
-<section id="defining-layers">
-<h4>Defining Layers<a class="headerlink" href="#defining-layers" title="Link to this heading">¶</a></h4>
-<dl class="simple">
-<dt>A layer is an item without children which has at least the following properties:</dt><dd><ul class="simple">
-<li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">connection</span></code></dt><dd><ul>
-<li><p>this defines the path to the data</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">provider</span></code></dt><dd><ul>
-<li><p>this tells QGIS how to interpret the path to add the layer to the project.</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-</ul>
-</dd>
-<dt>Optionally a layer can have the following properties:</dt><dd><ul class="simple">
-<li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">description</span></code></dt><dd><ul>
-<li><p>this is the description shown to the user</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">keywords</span></code></dt><dd><ul>
-<li><p>these keywords get indexed so they aid searching. Don’t duplicate words from the <code class="docutils literal notranslate"><span class="pre">description</span></code> as those words get indexed anyhow.</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">metadata_url</span></code></dt><dd><ul>
-<li><p>an URL to a page containing metadata for the layer</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">on_load_message</span></code></dt><dd><ul>
-<li><p>a message to show the user when the layer gets loaded. This message is shown in the message bar</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">on_select_message</span></code></dt><dd><ul>
-<li><p>a message to show the user when the user selects the layer in the library. This message is shown in a message bar in the library dialog.</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">insert_point</span></code></dt><dd><ul>
-<li><p>a value of <code class="docutils literal notranslate"><span class="pre">top</span></code> will insert a layer in the top of the layer tree. For layers based on .qlr files this will only work for QGIS versions above 3.30.</p></li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">metadata_url</span></code></dt>
+<dd><ul class="first last">
+<li>an URL to a page containing metadata for the layer</li>
 </ul>
 </dd>
 </dl>
@@ -232,43 +177,105 @@
 </ul>
 </dd>
 </dl>
-<p>Both the <code class="docutils literal notranslate"><span class="pre">on_load_message</span></code> and the <code class="docutils literal notranslate"><span class="pre">on_select_message</span></code> can be a simple string. In that case the message is shown as an “Info” message on a blue background and should be clicked away by the user.</p>
-<p>Both the <code class="docutils literal notranslate"><span class="pre">on_load_message</span></code> and the <code class="docutils literal notranslate"><span class="pre">on_select_message</span></code> can be a dictionary like this:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&quot;on_select_message&quot;: {
+</div>
+<div class="section" id="defining-layers">
+<h4>Defining Layers<a class="headerlink" href="#defining-layers" title="Permalink to this headline">¶</a></h4>
+<dl class="docutils">
+<dt>A layer is an item without children which has at least the following properties:</dt>
+<dd><ul class="first last simple">
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">connection</span></code></dt>
+<dd><ul class="first last">
+<li>this defines the path to the data</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">provider</span></code></dt>
+<dd><ul class="first last">
+<li>this tells QGIS how to interpret the path to add the layer to the project.</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+<dt>Optionally a layer can have the following properties:</dt>
+<dd><ul class="first last simple">
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">description</span></code></dt>
+<dd><ul class="first last">
+<li>this is the description shown to the user</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">keywords</span></code></dt>
+<dd><ul class="first last">
+<li>these keywords get indexed so they aid searching. Don’t duplicate words from the <code class="docutils literal"><span class="pre">description</span></code> as those words get indexed anyhow.</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">metadata_url</span></code></dt>
+<dd><ul class="first last">
+<li>an URL to a page containing metadata for the layer</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">on_load_message</span></code></dt>
+<dd><ul class="first last">
+<li>a message to show the user when the layer gets loaded. This message is shown in the message bar</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">on_select_message</span></code></dt>
+<dd><ul class="first last">
+<li>a message to show the user when the user selects the layer in the library. This message is shown in a message bar in the library dialog.</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+<p>Both the <code class="docutils literal"><span class="pre">on_load_message</span></code> and the <code class="docutils literal"><span class="pre">on_select_message</span></code> can be a simple string. In that case the message is shown as an “Info” message on a blue background and should be clicked away by the user.</p>
+<p>Both the <code class="docutils literal"><span class="pre">on_load_message</span></code> and the <code class="docutils literal"><span class="pre">on_select_message</span></code> can be a dictionary like this:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>&quot;on_select_message&quot;: {
       &quot;msg&quot;: &quot;Just an example critical select message&quot;,
       &quot;level&quot;: &quot;Critical&quot;,
       &quot;duration&quot;: 5
 }
 </pre></div>
 </div>
-<dl class="simple">
-<dt>These properties mean:</dt><dd><ul class="simple">
-<li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">msg</span></code></dt><dd><ul>
-<li><p>(required) The message shown to the user.</p></li>
+<dl class="docutils">
+<dt>These properties mean:</dt>
+<dd><ul class="first last simple">
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">msg</span></code></dt>
+<dd><ul class="first last">
+<li>(required) The message shown to the user.</li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">level</span></code></dt><dd><ul>
-<li><dl class="simple">
-<dt>(optional, defaults to <code class="docutils literal notranslate"><span class="pre">Info</span></code>) The message level as in this table:</dt><dd><ul>
-<li><p><code class="docutils literal notranslate"><span class="pre">Info</span></code>:      background color will be blue</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">Warning</span></code>:   background color will be orange</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">Critical</span></code>:  background color will be red</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">Succes</span></code>:    background color will be green</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">duration</span></code></dt><dd><ul>
-<li><p>(optional, defaults to 0) The duration in seconds the message will be shown. When zero, this will be indefinitely.</p></li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">level</span></code></dt>
+<dd><ul class="first last">
+<li><dl class="first docutils">
+<dt>(optional, defaults to <code class="docutils literal"><span class="pre">Info</span></code>) The message level as in this table:</dt>
+<dd><ul class="first last">
+<li><code class="docutils literal"><span class="pre">Info</span></code>:      background color will be blue</li>
+<li><code class="docutils literal"><span class="pre">Warning</span></code>:   background color will be orange</li>
+<li><code class="docutils literal"><span class="pre">Critical</span></code>:  background color will be red</li>
+<li><code class="docutils literal"><span class="pre">Succes</span></code>:    background color will be green</li>
 </ul>
 </dd>
 </dl>
@@ -276,60 +283,77 @@
 </ul>
 </dd>
 </dl>
-</section>
-<section id="defining-valid-layers">
-<h4>Defining VALID layers<a class="headerlink" href="#defining-valid-layers" title="Link to this heading">¶</a></h4>
-<p>A valid layer has to have a <code class="docutils literal notranslate"><span class="pre">provider</span></code> property which is supported. The following providers are supported (case sensitive):</p>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">duration</span></code></dt>
+<dd><ul class="first last">
+<li>(optional, defaults to 0) The duration in seconds the message will be shown. When zero, this will be indefinitely.</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</div>
+<div class="section" id="defining-valid-layers">
+<h4>Defining VALID layers<a class="headerlink" href="#defining-valid-layers" title="Permalink to this headline">¶</a></h4>
+<p>A valid layer has to have a <code class="docutils literal"><span class="pre">provider</span></code> property which is supported. The following providers are supported (case sensitive):</p>
 <blockquote>
 <div><ul class="simple">
-<li><dl class="simple">
-<dt>Vector Layers</dt><dd><ul>
-<li><p><code class="docutils literal notranslate"><span class="pre">delimitedtext</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">gpx</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">ogr</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">postgres</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">spatialite</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">WFS</span></code></p></li>
+<li><dl class="first docutils">
+<dt>Vector Layers</dt>
+<dd><ul class="first last">
+<li><code class="docutils literal"><span class="pre">delimitedtext</span></code></li>
+<li><code class="docutils literal"><span class="pre">gpx</span></code></li>
+<li><code class="docutils literal"><span class="pre">ogr</span></code></li>
+<li><code class="docutils literal"><span class="pre">postgres</span></code></li>
+<li><code class="docutils literal"><span class="pre">spatialite</span></code></li>
+<li><code class="docutils literal"><span class="pre">WFS</span></code></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="simple">
-<dt>Raster Layers</dt><dd><ul>
-<li><p><code class="docutils literal notranslate"><span class="pre">gdal</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">wcs</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">wms</span></code></p></li>
+<li><dl class="first docutils">
+<dt>Raster Layers</dt>
+<dd><ul class="first last">
+<li><code class="docutils literal"><span class="pre">gdal</span></code></li>
+<li><code class="docutils literal"><span class="pre">wcs</span></code></li>
+<li><code class="docutils literal"><span class="pre">wms</span></code></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="simple">
-<dt>Any layer type via qlr file</dt><dd><ul>
-<li><p><code class="docutils literal notranslate"><span class="pre">qlr</span></code></p></li>
+<li><dl class="first docutils">
+<dt>Any layer type via qlr file</dt>
+<dd><ul class="first last">
+<li><code class="docutils literal"><span class="pre">qlr</span></code></li>
 </ul>
 </dd>
 </dl>
 </li>
 </ul>
 </div></blockquote>
-<p>All these require a <code class="docutils literal notranslate"><span class="pre">connection</span></code> which QGIS uses to add the layer. Creating a valid <code class="docutils literal notranslate"><span class="pre">connection</span></code> is a bit of a black art for these layer types. Adding the layer to be defined to QGIS first and then looking at the source properties helps, as well as <a class="reference external" href="https://docs.qgis.org/testing/en/docs/pyqgis_developer_cookbook/loadlayer.html">this page</a> in the pyQGIS cookbook.</p>
+<p>All these require a <code class="docutils literal"><span class="pre">connection</span></code> which QGIS uses to add the layer. Creating a valid <code class="docutils literal"><span class="pre">connection</span></code> is a bit of a black art for these layer types. Adding the layer to be defined to QGIS first and then looking at the source properties helps, as well as <a class="reference external" href="https://docs.qgis.org/testing/en/docs/pyqgis_developer_cookbook/loadlayer.html">this page</a> in the pyQGIS cookbook.</p>
 <p>A much easier way to create a valid layer is the following process:</p>
 <blockquote>
 <div><ol class="arabic simple">
-<li><p>In QGIS create a layer (or a group layer) having all the properties you want the layer in the library to have)</p></li>
-<li><p>Export this layer (or layer group) to a QGIS layer definition file (.qlr)</p></li>
-<li><dl class="simple">
-<dt>Make the path to this .qlr file the <code class="docutils literal notranslate"><span class="pre">connection</span></code>. This may be</dt><dd><ul class="simple">
-<li><p>an absolute path on the file system</p></li>
-<li><p>a relative path on the file system (relative to the Map Library plugin folder)</p></li>
-<li><p>an URL starting with <code class="docutils literal notranslate"><span class="pre">http://</span></code> or <code class="docutils literal notranslate"><span class="pre">https://</span></code></p></li>
+<li>In QGIS create a layer (or a group layer) having all the properties you want the layer in the library to have)</li>
+<li>Export this layer (or layer group) to a QGIS layer definition file (.qlr)</li>
+<li><dl class="first docutils">
+<dt>Make the path to this .qlr file the <code class="docutils literal"><span class="pre">connection</span></code>. This may be</dt>
+<dd><ul class="first last">
+<li>an absolute path on the file system</li>
+<li>a relative path on the file system (relative to the Map Library plugin folder)</li>
+<li>an URL starting with <code class="docutils literal"><span class="pre">http://</span></code> or <code class="docutils literal"><span class="pre">https://</span></code></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="simple">
-<dt>Set the <code class="docutils literal notranslate"><span class="pre">provider</span></code> to</dt><dd><ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">qlr</span></code></p></li>
+<li><dl class="first docutils">
+<dt>Set the <code class="docutils literal"><span class="pre">provider</span></code> to</dt>
+<dd><ul class="first last">
+<li><code class="docutils literal"><span class="pre">qlr</span></code></li>
 </ul>
 </dd>
 </dl>
@@ -338,37 +362,35 @@
 </div></blockquote>
 <p>The nice thing about this approach is that the QGIS layer definition file saves all properties of the layer(group) like styling, scale dependent visibility, metadata, etc.</p>
 <p><strong>Beware:</strong></p>
-<p>If you create layers from local files the user must have access to the file paths which ends up in the <code class="docutils literal notranslate"><span class="pre">.qlr</span></code> file. Depending on system configuration it might be easier to work with relative paths (relative to the Map Library plugin folder) or rather with absolute paths.</p>
-<p>For things to work out it might be necessary to edit the <code class="docutils literal notranslate"><span class="pre">.qlr</span></code> files with a text editor to get the file paths right.</p>
-</section>
-</section>
-<section id="distributing-map-libraries-in-an-organization">
-<h3>Distributing Map Libraries in an organization<a class="headerlink" href="#distributing-map-libraries-in-an-organization" title="Link to this heading">¶</a></h3>
+<p>If you create layers from local files the user must have access to the file paths which ends up in the <code class="docutils literal"><span class="pre">.qlr</span></code> file. Depending on system configuration it might be easier to work with relative paths (relative to the Map Library plugin folder) or rather with absolute paths.</p>
+<p>For things to work out it might be necessary to edit the <code class="docutils literal"><span class="pre">.qlr</span></code> files with a text editor to get the file paths right.</p>
+</div>
+</div>
+<div class="section" id="distributing-map-libraries-in-an-organization">
+<h3>Distributing Map Libraries in an organization<a class="headerlink" href="#distributing-map-libraries-in-an-organization" title="Permalink to this headline">¶</a></h3>
 <p>Many organizations distribute plugins and settings via the QGIS user profile to the end users. Often different profiles are distributed to different user groups.</p>
-<p>In the user profile the file <code class="docutils literal notranslate"><span class="pre">QGIS3.ini</span></code> plays a central role. A lot of settings, including plugins, plugin settings but also eg. the users tool bar settings are stored in this file.</p>
-<p>Because all of these different settings in this file it is not nice to push a new <code class="docutils literal notranslate"><span class="pre">QGIS3.ini</span></code> file to a group of users to distribute a new Map Library Index file.</p>
-<p>This can be avoided by offloading the plugin settings to a global settings file  <code class="docutils literal notranslate"><span class="pre">your_QGIS_PKG_path/resources/qgis_global_settings.ini</span></code>.
-To do this use a text editor to create <code class="docutils literal notranslate"><span class="pre">your_QGIS_PKG_path/resources/qgis_global_settings.ini</span></code> and copy to that file the appropriate section from the <code class="docutils literal notranslate"><span class="pre">QGIS3.ini</span></code> file (don’t forget to remove that section from the <code class="docutils literal notranslate"><span class="pre">QGIS3.ini</span></code> as well) . This section will look something like this:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">MapLibrary</span><span class="p">]</span>
+<p>In the user profile the file <code class="docutils literal"><span class="pre">QGIS3.ini</span></code> plays a central role. A lot of settings, including plugins, plugin settings but also eg. the users tool bar settings are stored in this file.</p>
+<p>Because all of these different settings in this file it is not nice to push a new <code class="docutils literal"><span class="pre">QGIS3.ini</span></code> file to a group of users to distribute a new Map Library Index file.</p>
+<p>This can be avoided by offloading the plugin settings to a global settings file  <code class="docutils literal"><span class="pre">your_QGIS_PKG_path/resources/qgis_global_settings.ini</span></code>.
+To do this use a text editor to create <code class="docutils literal"><span class="pre">your_QGIS_PKG_path/resources/qgis_global_settings.ini</span></code> and copy to that file the appropriate section from the <code class="docutils literal"><span class="pre">QGIS3.ini</span></code> file (don’t forget to remove that section from the <code class="docutils literal"><span class="pre">QGIS3.ini</span></code> as well) . This section will look something like this:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">MapLibrary</span><span class="p">]</span>
 <span class="n">lib_path</span><span class="o">=</span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">your_url</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">your_library</span><span class="o">.</span><span class="n">json</span>
 </pre></div>
 </div>
 <p>For more information on the QGIS configuration see: <a class="reference external" href="https://docs.qgis.org/3.10/en/docs/user_manual/introduction/qgis_configuration.html#running-qgis-with-advanced-settings">https://docs.qgis.org/3.10/en/docs/user_manual/introduction/qgis_configuration.html#running-qgis-with-advanced-settings</a></p>
 <p>For more information on distributing settings to users or user groups see the outdated but still informative: <a class="reference external" href="http://www.qgis.nl/2014/04/22/qgis-in-de-klas-onder-windows/?lang=en">http://www.qgis.nl/2014/04/22/qgis-in-de-klas-onder-windows/?lang=en</a></p>
-</section>
-</section>
-</section>
+</div>
+</div>
+</div>
 
 
-            <div class="clearer"></div>
           </div>
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <div>
-    <h3><a href="index.html">Table of Contents</a></h3>
-    <ul>
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
 <li><a class="reference internal" href="#">Introduction</a><ul>
 <li><a class="reference internal" href="#about">About</a></li>
 <li><a class="reference internal" href="#using-the-plugin">Using the plugin</a></li>
@@ -390,12 +412,9 @@ To do this use a text editor to create <code class="docutils literal notranslate
 </li>
 </ul>
 
-  </div>
-  <div>
-    <h4>Previous topic</h4>
-    <p class="topless"><a href="index.html"
-                          title="previous chapter">Welcome to the Map Library plugin documentation</a></p>
-  </div>
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Welcome to the Map Library plugin documentation</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -404,15 +423,15 @@ To do this use a text editor to create <code class="docutils literal notranslate
     </ul>
    </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3 id="searchlabel">Quick search</h3>
-    <div class="searchformwrapper">
+  <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
     </form>
-    </div>
 </div>
-<script>document.getElementById('searchbox').style.display = "block"</script>
+<script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -426,13 +445,12 @@ To do this use a text editor to create <code class="docutils literal notranslate
         <li class="right" >
           <a href="index.html" title="Welcome to the Map Library plugin documentation"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">Map Library 1.3 documentation</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">Introduction</a></li> 
+        <li class="nav-item nav-item-0"><a href="index.html">Map Library 1.3 documentation</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-    &#169; Copyright 2019, Marco Duiker (MD-kwadraat).
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
+        &#169; Copyright 2019, Marco Duiker (MD-kwadraat).
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.5.
     </div>
   </body>
 </html>

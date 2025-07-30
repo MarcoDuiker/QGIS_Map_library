@@ -3,7 +3,7 @@
 name=Map Library
 qgisMinimumVersion=3.0
 description=A map library which makes it easy to add much used maps to your project.
-version=1.4
+version=1.3
 author=Marco Duiker - MD-kwadraat
 email=md@md-kwadraat.nl
 
@@ -24,9 +24,8 @@ changelog=  0.7 improved error handling, fixed encoding problem on remote qlr wi
             1.0 added the option to filter search results and navigate them with up/down keys.
             1.1 fixed bug, where some results were skipped when navigating filtered results.
             1.2 added the possibility for messaging the user on selecting or adding a layer.
-            1.3 added a possibility to reload the libraries automatically controlled by an interval value;
-                fixed bug, where closing and reopening the dialog with search strings in the search box could lead to errors.
-            1.4 add all layers from qlr on top of the layer tree for QGIS above version 3.30.
+            1.3 added a possibility to reload the libraries automatically controlled by an interval value.
+            1.x fixed bug, where closing and reopening the dialog with search strings in the search box could lead to errors.
 
 # Tags are comma separated with spaces allowed
 tags=maps, layers, wms, wfs, ogr, library

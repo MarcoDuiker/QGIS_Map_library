@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>425</width>
-    <height>204</height>
+    <width>401</width>
+    <height>166</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -72,16 +72,6 @@
     <widget class="QCheckBox" name="filter_cbx">
      <property name="text">
       <string>Enable filtering by search term</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QCheckBox" name="insert_order_top_cbx">
-     <property name="toolTip">
-      <string>If checked, layer loading position will default to top. Otherwise the default is bottom.</string>
-     </property>
-     <property name="text">
-      <string>Add layers as top layer</string>
      </property>
     </widget>
    </item>
