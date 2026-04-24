@@ -105,7 +105,10 @@ class MapLibrary:
         ]                       # first two items are shown in tree
                                 # rest of the items are hidden
         
-        
+        self.lib_reserved_words = ( "LibrariesRefreshInterval",
+                                    "email_address",
+                                    "text_mail_link" )
+
         # Translate the headers of the treewidget.
         # items are managed manualy in the 'i18n/MapLibrary_{}.ts files'
         # add at least "name" and "description" items with translation to 
@@ -148,7 +151,9 @@ class MapLibrary:
         self.dlg_msg_bar = QgsMessageBar()
         self.dlg.layout().insertWidget(0, self.dlg_msg_bar)
 
-        refresh_interval = self.read_from_json(os.path.join(self.plugin_dir, 'libs', 'libs.json'),'LibrariesRefreshInterval')
+        refresh_interval = self.read_global_setting_from_json(
+            os.path.join(self.plugin_dir, 'libs', 'libs.json'),
+            'LibrariesRefreshInterval')
         if refresh_interval is not None:
             self.timer = QTimer()
             self.timer.timeout.connect(self.reload_library)
@@ -160,7 +165,7 @@ class MapLibrary:
         # error catcher
         QgsApplication.messageLog().messageReceived.connect(self.message_error_catcher)
 
-    def read_from_json(self, filename, param):
+    def read_global_setting_from_json(self, filename, param):
         with open(filename, 'r') as f:
             data = json.load(f)
             value = data.get(param)
@@ -656,10 +661,11 @@ class MapLibrary:
         Slot connected to messageReceived.
         Delegates to more specific handlers depending on 'tag' or message content.
         """
-        if tag == 'PostGIS':
+        if tag == 'PostGIS' and self.psql_contact_text:
             self.pgsql_error_catcher(msg, level)
 
     def pgsql_error_catcher(self, msg, level):
+        
         keys = ['permission denied', 'no SELECT privilege']
 
         # Übersetzungen aus self.tr holen
@@ -667,32 +673,19 @@ class MapLibrary:
 
         # Keywords kombinieren: Original + übersetzt + typische Teilstrings aus Postgres
         permission_keywords = set(keys + translated_keys)
-
         is_permission_error = any(kw.lower() in msg.lower() for kw in permission_keywords)
-
-        # Kontaktinfo
-        email_address = self.read_from_json(os.path.join(self.plugin_dir, 'libs', 'libs.json'),'email_address')
-        text_mail_link = self.read_from_json(os.path.join(self.plugin_dir, 'libs', 'libs.json'),'text_mail_link')
-
-        if email_address and text_mail_link:
-            mailto_link = f"mailto:{email_address}"
-            email_link_html = f'<a href="{mailto_link}">{text_mail_link}</a>'
-            text = self.tr(" Please contact ")
-            contact_text = f"{text} {email_link_html}."
-        else:
-            contact_text = ""
 
         if is_permission_error:
             try:
                 selectedItem = self.layerTree.selectedItems()[0]
                 layer_props = self.props_from_tree_item(selectedItem)
-                text_one = self.tr("The layer")
-                text_two = self.tr("could not be loaded because you do not have sufficient privileges")
+                text_one = self.tr(u"The layer")
+                text_two = self.tr(u"could not be loaded because you do not have sufficient privileges on the PostGIS database")
 
-                message = f"{text_one} {layer_props['name']} {text_two}. {contact_text}"
+                message = f"{text_one} {layer_props['name']} {text_two}. {self.psql_contact_text}"
 
                 self.iface.messageBar().pushMessage(
-                    self.tr("ERROR"),
+                    "Warning",
                     message,
                     level=Qgis.Warning,
                     duration=0
@@ -736,9 +729,10 @@ class MapLibrary:
                 QgsMessageLog.logMessage(u'Error showing message; Message string not found.', 
                                           'Map Library') 
             if 'level' in message:
+                level =  message['level']
+            else:
                 QgsMessageLog.logMessage(u'Error in message level; level %s not defined.' % level, 
                                           'Map Library') 
-                level =  message['level']
             if 'duration' in message \
             and type(message['duration']) == int:
                 duration = message['duration']
@@ -821,7 +815,8 @@ class MapLibrary:
         Load the library tree, and show it to the user.
         
         We do this only once on opening the dialog, so we keep plugin load time
-        low.
+        low. If a `LibrariesRefreshInterval` interval is set, this is ofcourse
+        done more often.
         """   
         self.layerTree.clear()
         if not self.library_tree_filled or self.dlgclosed or not self.dlg.isVisible():
@@ -834,20 +829,35 @@ class MapLibrary:
                 json_tree = self.get_text_contents_from_path(libs_def_file)
                 libs = json.loads(json_tree)
                 for name, path in libs.items():
-                    if not name == "LibrariesRefreshInterval":
+                    if not name in self.lib_reserved_words:
                         word_list = word_list + self.add_lib_to_tree(name, path)
                 completer = QCompleter(set([x.lower() for x in word_list]))
                 completer.setCaseSensitivity(QtCore.Qt.CaseInsensitive)
                 self.dlg.search_ldt.setCompleter(completer)
                 self.library_tree_filled = True
+                
+                # psql error catcher text
+                email_address = self.read_global_setting_from_json(
+                    os.path.join(self.plugin_dir, 'libs', 'libs.json'),
+                    'email_address')
+                text_mail_link = self.read_global_setting_from_json(
+                    os.path.join(self.plugin_dir, 'libs', 'libs.json'),
+                    'text_mail_link')
+                if email_address and text_mail_link:
+                    mailto_link = f"mailto:{self.psql_email_address}"
+                    email_link_html = f'<a href="{mailto_link}">{text_mail_link}</a>'
+                    text = self.tr(u" Please contact ")
+                    self.psql_contact_text = f"{text} {email_link_html}."
+                else:
+                    self.psql_contact_text = None
+                
             except Exception as e:
                 self.iface.messageBar().pushMessage("Error",
                     self.tr(u'Initializing Library failed. ') + 
                     self.tr(u'See message log for more info.'), 
                     level = Qgis.Critical)
                 QgsMessageLog.logMessage(u'Error Initializing Library ' + str(e), 
-                                        'Map Library')
-                        
+                                          'Map Library')
             self.dlg.show()
 
 

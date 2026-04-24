@@ -16,23 +16,26 @@ More info in the [help](https://marcoduiker.github.io/QGIS_Map_library/help/buil
 
 ###  1.4
 
-Contains the implementation of an error catcher for PostgreSQL errors.
+Contains the implementation of an error catcher for PostgreSQL errors. 
 When a PostgreSQL error occurs (currently, it only works with error code 42501 – insufficient_privilege), a message is displayed via the QGIS message bar.
 
-In addition, a clickable link has been added that allows the user to send an email directly to the administrator or the person responsible for the database regarding table access permissions.
-The configuration for the email link can be provided via the following JSON structure in thw libs.json:
+In addition, a click-able link has been added that allows the user to send an email directly to the administrator or the person responsible for the database regarding table access permissions.
+The configuration for the email link can be provided via the following JSON structure in the libs.json:
 
 ```json
 {
-    "email_address": "",
-    "text_mail_link": ""
+    "Example":        "libs/example/example.json",
+    "email_address":  "administrator@my_organization.org",
+    "text_mail_link": "PostgreSQL administrator"
 }
 ```
 
-email_address: The email address of the database admin.
-text_mail_link: The text displayed as a clickable link in the message bar, e.g., "Contact Admin" or "Report Error".
+`email_address`: The email address of the database admin.
+`text_mail_link`: The text displayed as a click-able link in the message bar, e.g., "Contact Admin" or "Report Error".
 
-To ensure that the error catcher works correctly, QGIS must either be set to English or a translation file must be used (see the i18n folder) with translations for the error keywords "permission denied" and "no SELECT privilege".
+To ensure that the error catcher works correctly, QGIS must either be set to English or a translation file must be used (see the i18n folder) with translations for the error keywords `permission denied` and `no SELECT privilege`.
+
+Also, bug fix where closing and reopening the dialog with search strings in the search box could lead to errors.
 
 ###  1.3
 
