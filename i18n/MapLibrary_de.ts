@@ -13,14 +13,14 @@
         <translation>kein SELECT-Recht</translation>
     </message>
     <message>
-        <location filename="../map_library.py" line="687"/>
-        <source>The layer</source>
-        <translation>Der Layer</translation>
-    </message>
-    <message>
         <location filename="../map_library.py" line="688"/>
         <source>could not be loaded because you do not have sufficient privileges</source>
         <translation>konnte nicht geladen werden, weil Sie die benötigten Rechte dafür nicht besitzen</translation>
+    </message>
+    <message>
+        <location filename="../map_library.py" line="853"/>
+        <source>Please contact</source>
+        <translation>Bitte melden Sie sich bei</translation>
     </message>
 </context>
 </TS>

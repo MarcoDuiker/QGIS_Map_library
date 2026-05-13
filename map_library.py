@@ -665,33 +665,41 @@ class MapLibrary:
             self.pgsql_error_catcher(msg, level)
 
     def pgsql_error_catcher(self, msg, level):
-        
-        keys = ['permission denied', 'no SELECT privilege']
+        """
+        Handles errors where tag is 'PostGIS'. 
+        """      
+        error_keys = {
+            "permission_error": [
+                "permission denied",
+                "no SELECT privilege",
+            ]
+            #more error types could be added to the dict
+        }
 
-        # Übersetzungen aus self.tr holen
-        translated_keys = [self.tr(k) for k in keys]
+        msg_lower = msg.lower()
 
-        # Keywords kombinieren: Original + übersetzt + typische Teilstrings aus Postgres
-        permission_keywords = set(keys + translated_keys)
-        is_permission_error = any(kw.lower() in msg.lower() for kw in permission_keywords)
+        for _, keys in error_keys.items():
 
-        if is_permission_error:
-            try:
-                selectedItem = self.layerTree.selectedItems()[0]
-                layer_props = self.props_from_tree_item(selectedItem)
-                text_one = self.tr(u"The layer")
-                text_two = self.tr(u"could not be loaded because you do not have sufficient privileges on the PostGIS database")
+            translated_keys = [self.tr(k) for k in keys]
+            all_keys = set(keys + translated_keys)
 
-                message = f"{text_one} {layer_props['name']} {text_two}. {self.psql_contact_text}"
+            if any(kw.lower() in msg_lower for kw in all_keys):
+                try:
+                    selectedItem = self.layerTree.selectedItems()[0]
+                    layer_props = self.props_from_tree_item(selectedItem)
+                    layer_name = layer_props['name']
+                    title = f"Error ({layer_name})"
 
-                self.iface.messageBar().pushMessage(
-                    "Warning",
-                    message,
-                    level=Qgis.Warning,
-                    duration=0
-                )
-            except IndexError:
-                pass
+                    message = f"<b>{self.psql_contact_text}!</b> {msg}"
+
+                    self.iface.messageBar().pushMessage(
+                        title,
+                        message,
+                        level=Qgis.Warning,
+                        duration=0
+                    )
+                except IndexError:
+                    pass
 
 
     def show_layer_message(self, message, context):
@@ -844,10 +852,10 @@ class MapLibrary:
                     os.path.join(self.plugin_dir, 'libs', 'libs.json'),
                     'text_mail_link')
                 if email_address and text_mail_link:
-                    mailto_link = f"mailto:{self.psql_email_address}"
+                    mailto_link = f"mailto:{email_address}"
                     email_link_html = f'<a href="{mailto_link}">{text_mail_link}</a>'
-                    text = self.tr(u" Please contact ")
-                    self.psql_contact_text = f"{text} {email_link_html}."
+                    text = self.tr(u'Please contact')
+                    self.psql_contact_text = f"{text} {email_link_html}"
                 else:
                     self.psql_contact_text = None
                 
