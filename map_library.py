@@ -846,11 +846,14 @@ class MapLibrary:
                 
                 # psql error catcher text
                 email_address = self.read_global_setting_from_json(
-                    os.path.join(self.plugin_dir, 'libs', 'libs.json'),
-                    'email_address')
+                    libs_def_file,
+                    'email_address'
+                )
                 text_mail_link = self.read_global_setting_from_json(
-                    os.path.join(self.plugin_dir, 'libs', 'libs.json'),
-                    'text_mail_link')
+                    libs_def_file,
+                    'text_mail_link'
+                )
+
                 if email_address and text_mail_link:
                     mailto_link = f"mailto:{email_address}"
                     email_link_html = f'<a href="{mailto_link}">{text_mail_link}</a>'
