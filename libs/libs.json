@@ -1,4 +1,7 @@
 {
     "Example": "libs/example/example.json",
-    "LibrariesRefreshInterval": 60
+    "LibrariesRefreshInterval": 60,
+    "email_address": "",
+    "text_mail_link": ""
 }
+

@@ -81,6 +81,33 @@ It is possible to have the map libraries reloaded automatically by adding a ``Li
 
 The interval must be specified in minutes.
 
+PostgreSQL/ PostGIS error messaging
+'''''''''''''''''''''''''''''''''''
+
+It is possible to define an e-mail address to present as a click-able link to the user when a PostgreSQL/ PostGIS permissions error occurs on loading a layer.
+
+This can be done by adding a ``email_address`` and a ``text_mail_link`` entry like:
+
+::
+
+    {
+        "Example":          "libs/example/example.json",
+        "Another Example":  "libs/example/example2.json",
+        "email_address":    "administrator@my_organization.org",
+    	"text_mail_link":   "PostgreSQL administrator"
+    } 
+
+**Beware:**
+This works only when QGIS is set to English or any other language for which a translation file is present in the i18n folder of the plugin.
+In this translation file the following keys need to be translated:
+
+::
+
+	permission denied
+	no SELECT privilege
+
+Currently this is the case for German only.
+
 
 Map Library contents file
 -------------------------
