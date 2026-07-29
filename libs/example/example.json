@@ -7,7 +7,8 @@
             "provider": "qlr", 
             "description": "Bing satellite",
             "keywords": ["Microsoft"],
-            "metadata_url": "https://wikipedia.org/wiki/Bing_Maps"
+            "metadata_url": "https://wikipedia.org/wiki/Bing_Maps",
+            "relations": ["id;name;referenced layer;referencing layer;referenced field;refererencing field"]
         },
 
         "Google": {

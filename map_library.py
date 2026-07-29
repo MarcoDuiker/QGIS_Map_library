@@ -20,7 +20,6 @@
  *                                                                         *
  ***************************************************************************/
 """
-
 import ast
 import os.path
 import re
@@ -35,8 +34,9 @@ from qgis.PyQt.QtGui import QIcon, QDesktopServices
 from qgis.PyQt.QtWidgets import QAction, QApplication, QTreeWidget, \
                             QTreeWidgetItem, QMessageBox, QDialogButtonBox, \
                             QCompleter, QFileDialog, QTreeWidgetItemIterator
-from qgis.core import Qgis, QgsMessageLog, QgsProject, QgsLayerDefinition, QgsSettings
+from qgis.core import Qgis, QgsMessageLog, QgsProject, QgsLayerDefinition, QgsSettings, QgsRelation, QgsApplication, QgsEditFormConfig, QgsReadWriteContext
 from qgis.gui import QgsMessageBar
+from qgis.PyQt.QtXml import QDomDocument
 
 # Initialize Qt resources from file resources.py
 from .resources import *
@@ -101,7 +101,8 @@ class MapLibrary:
              "provider",        # QGIS layer provider or `qlr` for qlr files
              "on_select_message",# a message shown when the layer is selected
              "on_load_message",  # a message shown when the layer is loaded
-             "metadata_url"     # presented in lib as well as used as identifier
+             "metadata_url",    # presented in lib as well as used as identifier
+             "relations"        # relation definitions for the layer, used to create relations in QGIS
                                 # for the layer in the QGIS metadata tab
         ]                       # first two items are shown in tree
                                 # rest of the items are hidden
@@ -546,19 +547,25 @@ class MapLibrary:
                                           'Map Library')
             finally:
                 QApplication.restoreOverrideCursor()
-        else:
-            QApplication.restoreOverrideCursor()
-            self.iface.messageBar().pushMessage("Error",
-                self.tr(u'Loading layer failed. '), 
-                self.tr(u'Layer provider "') + layer_props['provider'] + \
-                    self.tr(u'" not supported.'), 
-                level = Qgis.Critical)
-            return
 
+        else:
+            # error message only wehen clicking on layer not on group
+            if layer_props['provider'] != "":
+                QApplication.restoreOverrideCursor()
+                self.iface.messageBar().pushMessage("Error",
+                    self.tr(u'Loading layer failed. '), 
+                    self.tr(u'Layer provider "') + layer_props['provider'] + \
+                        self.tr(u'" not supported.'), 
+                    level = Qgis.Critical)
+                return
+            else:
+                QApplication.restoreOverrideCursor()
+                return
+            
         if not layer or not layer.isValid():
-            self.iface.messageBar().pushMessage("Error",
-                self.tr(u'Loading layer failed. '), 
-                level = Qgis.Critical)
+                    self.iface.messageBar().pushMessage("Error",
+                        self.tr(u'Loading layer failed. '), 
+                        level = Qgis.Critical)
                 
 
     def add_layer_by_qlr(self, layer_props):
@@ -617,10 +624,16 @@ class MapLibrary:
         
         selectedItem = self.layerTree.selectedItems()[0]
         layer_props = self.props_from_tree_item(selectedItem)
+
+        relations = []
+        relations = layer_props.get("relations", []) or []
         
         QgsMessageLog.logMessage(u'Adding layer ' + str(layer_props), 
                                           'Map Library')
-        
+
+        if isinstance(relations, str):
+            relations = relations.split(",")
+      
         if layer_props:
             if layer_props['provider'].lower() == 'qlr':
                 self.add_layer_by_qlr(layer_props)
@@ -629,7 +642,12 @@ class MapLibrary:
 
             if layer_props['on_load_message']:
                 self.show_layer_message(layer_props['on_load_message'], 'load')
-                
+
+        if relations:
+            QTimer.singleShot(
+                5000,
+                lambda: self.create_relations(relations)
+            )             
             # we might add something here for a "most recent layers" section
             # this should be persistent between sessions, so added to QgsSettings
             # dataFromChild()
@@ -642,6 +660,84 @@ class MapLibrary:
                 #settings.setValue("items", TreeWidget.dataFromChild(
                 #                               self.invisibleRootItem()))
                 #settings.endGroup()
+                
+    def create_relation(self, relation_string):
+
+        QgsMessageLog.logMessage(
+            f"create_relation: {relation_string}",
+            "Map Library",
+            Qgis.Info
+        )
+
+        parts = relation_string.split(";")
+        if len(parts) != 6:
+            QgsMessageLog.logMessage(
+                f"Invalid relation definition: {relation_string}",
+                "Map Library",
+                Qgis.Warning
+            )
+            return
+
+        rel_id, rel_name, referenced_layer_name, referencing_layer_name, pk, fk = parts
+
+        manager = QgsProject.instance().relationManager()
+
+        if manager.relation(rel_id).isValid():
+            return
+
+        referenced_layers = QgsProject.instance().mapLayersByName(referenced_layer_name)
+        referencing_layers = QgsProject.instance().mapLayersByName(referencing_layer_name)
+
+        if not referenced_layers or not referencing_layers:
+            QgsMessageLog.logMessage(
+                f"Layer of relation '{rel_name}' couldn't be found.",
+                "Map Library",
+                Qgis.Warning
+            )
+            return
+
+        referenced = referenced_layers[0]
+        referencing = referencing_layers[0]
+
+        relation = QgsRelation()
+        relation.setId(rel_id)
+        relation.setName(rel_name)
+        relation.setReferencedLayer(referenced.id())
+        relation.setReferencingLayer(referencing.id())
+        relation.addFieldPair(fk, pk)
+
+        if not relation.isValid():
+            QgsMessageLog.logMessage(
+                f"Relation '{rel_name}' ist ungültig.",
+                "Map Library",
+                Qgis.Warning
+            )
+            return
+
+        manager.addRelation(relation)
+
+        self.refresh_relation_widgets(referenced)
+            
+    def create_relations(self, relations):
+        
+        for relation in relations:
+            self.create_relation(relation)
+
+    def refresh_relation_widgets(self, layer):
+
+        form_config = layer.editFormConfig()
+
+        doc = QDomDocument()
+        context = QgsReadWriteContext()
+
+        form_config.writeXml(doc, context)
+
+        new_cfg = QgsEditFormConfig()
+        new_cfg.readXml(doc, context)
+
+        layer.setEditFormConfig(new_cfg)
+        layer.setEditFormConfig(form_config)
+        layer.triggerRepaint()
 
     def show_layer_message(self, message, context):
         '''
