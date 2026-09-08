@@ -2,8 +2,9 @@
 [general]
 name=Map Library
 qgisMinimumVersion=3.0
+qgisMaximumVersion=4.99
 description=A map library which makes it easy to add much used maps to your project.
-version=1.3
+version=1.4
 author=Marco Duiker - MD-kwadraat
 email=md@md-kwadraat.nl
 
@@ -16,7 +17,8 @@ repository=https://github.com/MarcoDuiker/QGIS_Map_library/
 # Recommended items:
 
 # Uncomment the following line and add your changelog:
-changelog=  0.7 improved error handling, fixed encoding problem on remote qlr with non-ascii characters. 
+changelog=  1.4 added Qt 6 and QGIS 4 compatibility while retaining QGIS 3 support.
+            0.7 improved error handling, fixed encoding problem on remote qlr with non-ascii characters.
             0.8 moved settings to QgsSettings so a global settings file other than QGIS3.ini can be used. 
             0.9 added the option to disable alphabetical sorting.
             1.0 fixed bug, where sort settings could not be read correctly after restart of QGIS.
@@ -38,4 +40,3 @@ experimental=False
 
 # deprecated flag (applies to the whole plugin, not just a single version)
 deprecated=False
-

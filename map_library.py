@@ -28,8 +28,8 @@ import json
 import pathlib
 import tempfile
 
-import qgis.PyQt.QtCore
-from qgis.PyQt.QtCore import QSettings, QTranslator, qVersion,\
+from qgis.PyQt import QtCore
+from qgis.PyQt.QtCore import QTranslator, qVersion,\
                              QCoreApplication, QUrl, QTimer
 from qgis.PyQt.QtGui import QIcon, QDesktopServices
 from qgis.PyQt.QtWidgets import QAction, QApplication, QTreeWidget, \
@@ -69,7 +69,7 @@ class MapLibrary:
         self.plugin_dir = os.path.dirname(__file__)
 
         # initialize locale
-        locale = QgsSettings().value('locale/userLocale')[0:2]
+        locale = QgsSettings().value('locale/userLocale', 'en')[0:2]
         locale_path = os.path.join(
             self.plugin_dir,
             'i18n',
@@ -350,7 +350,8 @@ class MapLibrary:
             for column in range(0,len(self.layerTree_items)):
                 self.found_items = self.found_items + self.layerTree.findItems(
                     searchString, 
-                    QtCore.Qt.MatchContains | QtCore.Qt.MatchRecursive, 
+                    QtCore.Qt.MatchFlag.MatchContains |
+                    QtCore.Qt.MatchFlag.MatchRecursive,
                     column)
 
             self.found_items = self.get_unique_found_items(self.found_items)
@@ -453,7 +454,7 @@ class MapLibrary:
         
         txt = None
         if path[0:4].lower() == 'http':
-            QApplication.setOverrideCursor(QtCore.Qt.WaitCursor)
+            QApplication.setOverrideCursor(QtCore.Qt.CursorShape.WaitCursor)
             try:
                 (response, content) = self.nam.request(path)
                 txt = content.decode("utf-8")
@@ -462,7 +463,7 @@ class MapLibrary:
                     self.tr(u'Reading file ') + path + 
                     self.tr(u'failed. ') +
                     self.tr(u'See message log for more info.'), 
-                    level = Qgis.Critical)
+                    level = Qgis.MessageLevel.Critical)
                 QgsMessageLog.logMessage(u'Error reading file ' + str(e), 'Map Library')    
             finally:
                 QApplication.restoreOverrideCursor()
@@ -479,7 +480,7 @@ class MapLibrary:
                     self.tr(u'Reading file ') + path + 
                     self.tr(u'failed. ') +
                     self.tr(u'See message log for more info.'), 
-                    level = Qgis.Critical)
+                    level = Qgis.MessageLevel.Critical)
                 QgsMessageLog.logMessage(u'Error reading file ' + str(e), 'Map Library')
         return txt
         
@@ -504,7 +505,7 @@ class MapLibrary:
         supported_raster_providers = ["gdal","wcs","wms"]
         
         layer = None
-        QApplication.setOverrideCursor(QtCore.Qt.WaitCursor)
+        QApplication.setOverrideCursor(QtCore.Qt.CursorShape.WaitCursor)
         if layer_props['provider'] in supported_vector_providers:
             if not layer_props['provider'].lower() == "wfs":
                 # we have a file. might be local to plugin folder
@@ -523,7 +524,7 @@ class MapLibrary:
                 self.iface.messageBar().pushMessage("Error",
                     self.tr(u'Loading layer failed. ') + 
                     self.tr(u'See message log for more info.'), 
-                    level = Qgis.Critical)
+                    level = Qgis.MessageLevel.Critical)
                 QgsMessageLog.logMessage(u'Loading vector layer failed: ' + str(e), 
                                           'Map Library')
             finally:
@@ -541,7 +542,7 @@ class MapLibrary:
                 self.iface.messageBar().pushMessage("Error",
                     self.tr(u'Loading layer failed. ') + 
                     self.tr(u'See message log for more info.'), 
-                    level = Qgis.Critical)
+                    level = Qgis.MessageLevel.Critical)
                 QgsMessageLog.logMessage(u'Loading raster layer failed: ' + str(e), 
                                           'Map Library')
             finally:
@@ -552,13 +553,13 @@ class MapLibrary:
                 self.tr(u'Loading layer failed. '), 
                 self.tr(u'Layer provider "') + layer_props['provider'] + \
                     self.tr(u'" not supported.'), 
-                level = Qgis.Critical)
+                level = Qgis.MessageLevel.Critical)
             return
 
         if not layer or not layer.isValid():
             self.iface.messageBar().pushMessage("Error",
                 self.tr(u'Loading layer failed. '), 
-                level = Qgis.Critical)
+                level = Qgis.MessageLevel.Critical)
                 
 
     def add_layer_by_qlr(self, layer_props):
@@ -579,7 +580,7 @@ class MapLibrary:
                 self.iface.messageBar().pushMessage("Error",
                     self.tr(u'Loading layer failed. ') +
                     self.tr(u'See message log for more info.'), 
-                    level = Qgis.Critical)
+                    level = Qgis.MessageLevel.Critical)
                 QgsMessageLog.logMessage(u'Loading layer failed. ' +
                                          u'File not found: ' + str(path), 
                                          'Map Library')
@@ -599,7 +600,7 @@ class MapLibrary:
                 self.iface.messageBar().pushMessage("Error",
                     self.tr(u'Loading layer failed. ') + 
                     self.tr(u'See message log for more info.'), 
-                    level = Qgis.Critical)
+                    level = Qgis.MessageLevel.Critical)
                 QgsMessageLog.logMessage(u'Loading layer from qlr failed: ' + str(e), 
                                           'Map Library')
                 return
@@ -652,10 +653,10 @@ class MapLibrary:
         contect = load: the main message bar
         '''
 
-        levels = {  'Info':         Qgis.Info,
-                    'Warning':      Qgis.Warning,
-                    'Critical':     Qgis.Critical,
-                    'Succes':       Qgis.Success
+        levels = {  'Info':         Qgis.MessageLevel.Info,
+                    'Warning':      Qgis.MessageLevel.Warning,
+                    'Critical':     Qgis.MessageLevel.Critical,
+                    'Succes':       Qgis.MessageLevel.Success
         }
 
         level = 'Info'
@@ -779,14 +780,15 @@ class MapLibrary:
                     if not name == "LibrariesRefreshInterval":
                         word_list = word_list + self.add_lib_to_tree(name, path)
                 completer = QCompleter(set([x.lower() for x in word_list]))
-                completer.setCaseSensitivity(QtCore.Qt.CaseInsensitive)
+                completer.setCaseSensitivity(
+                    QtCore.Qt.CaseSensitivity.CaseInsensitive)
                 self.dlg.search_ldt.setCompleter(completer)
                 self.library_tree_filled = True
             except Exception as e:
                 self.iface.messageBar().pushMessage("Error",
                     self.tr(u'Initializing Library failed. ') + 
                     self.tr(u'See message log for more info.'), 
-                    level = Qgis.Critical)
+                    level = Qgis.MessageLevel.Critical)
                 QgsMessageLog.logMessage(u'Error Initializing Library ' + str(e), 
                                         'Map Library')
                         
@@ -826,11 +828,11 @@ class MapLibrary:
             self.settings_dlg.lib_path_ldt.setPlaceholderText("https://")
         self.settings_dlg.show()
         
-        result = self.settings_dlg.exec_()
+        result = self.settings_dlg.exec()
         if result:
             self.layerTree.clear()
             self.library_tree_filled = False
-            path = unicode(self.settings_dlg.lib_path_ldt.text())
+            path = self.settings_dlg.lib_path_ldt.text()
             if path[0:4] == 'http':
                 # urlEncode?
                 pass
