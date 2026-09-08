@@ -14,6 +14,10 @@ More info in the [help](https://marcoduiker.github.io/QGIS_Map_library/help/buil
 
 ## Version history
 
+### 1.4
+
+Adds Qt 6 and QGIS 4 compatibility while retaining QGIS 3 support.
+
 ###  1.3
 
 Contains the opportunity to auto reload the libraries. To do so, the following tag (`LibrariesRefreshInterval`) needs to be added in libs.json:
@@ -63,4 +67,3 @@ Bug fixes and improvements.
 ### 0.6
 
 The first Map Library plug-in develop for our new company [LandGoed](https://landgoed.it). This plug-in was developed in honor of the [BORIS](https://edepot.wur.nl/109167) application. The BORIS application was born more than 20 years ago and featured a library, with spatial data to go, and an integrated meta data system. 
-
